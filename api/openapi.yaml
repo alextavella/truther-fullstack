@@ -1,0 +1,69 @@
+openapi: 3.0.0
+info:
+  title: Notes API
+  description: Sample backend service
+  version: 1.0.0
+components:
+  schemas: {}
+paths:
+  /users:
+    post:
+      operationId: createUser
+      summary: users
+      tags:
+        - Users
+      description: Create an user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                role:
+                  type: string
+                  enum:
+                    - customer
+                    - admin
+                  default: customer
+              required:
+                - name
+                - email
+                - password
+              additionalProperties: false
+        required: true
+      responses:
+        "201":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  name:
+                    type: string
+                  email:
+                    type: string
+                    format: email
+                  password:
+                    type: string
+                  role:
+                    type: string
+                required:
+                  - id
+                  - name
+                  - email
+                  - password
+                  - role
+                additionalProperties: false
+servers:
+  - url: http://localhost:3333
+    description: Development
