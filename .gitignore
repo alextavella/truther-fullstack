@@ -1,0 +1,9 @@
+# Node
+node_modules
+dist
+coverage
+# Env
+.env
+# DB
+.docker
+*.db
