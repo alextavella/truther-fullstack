@@ -1,5 +1,4 @@
 import { int, mysqlEnum, mysqlTable, varchar } from 'drizzle-orm/mysql-core'
-import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 
 export const userRoles = ['customer', 'admin'] as const
 export const userRolesDefault = 'customer'
@@ -12,5 +11,5 @@ export const users = mysqlTable('users', {
   role: mysqlEnum(userRoles).default(userRolesDefault),
 })
 
-export const userSelectSchema = createSelectSchema(users)
-export const userInsertSchema = createInsertSchema(users)
+// export const userSelectSchema = createSelectSchema(users)
+// export const userInsertSchema = createInsertSchema(users)

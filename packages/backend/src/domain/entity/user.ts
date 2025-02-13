@@ -1,12 +1,24 @@
-import type { userInsertSchema, userSelectSchema } from '@/db/schema'
+import { userRoles, userRolesDefault } from '@/db/schema'
 import crypto from 'node:crypto'
 import { z } from 'zod'
 
-export type User = z.infer<typeof userSelectSchema>
-export type NewUser = z.infer<typeof userInsertSchema>
+// Schema
+const userSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  email: z.string(),
+  password: z.string(),
+  role: z.enum(userRoles).default(userRolesDefault).optional(),
+})
 
+// Types
+export type User = z.infer<typeof userSchema>
+export type NewUser = Omit<User, 'id'>
+
+// Config
 const salt = crypto.randomBytes(32).toString('hex')
 
+// Implementation
 export class UserEntity {
   static newUser(user: NewUser): NewUser {
     const hashPassword = this.generatePassword(user.password)
