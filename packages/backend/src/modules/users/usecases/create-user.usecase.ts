@@ -13,17 +13,17 @@ type Output = User
 export type ICreateUserUseCase = UseCase<Input, Output>
 
 export class CreateUsersUseCase implements ICreateUserUseCase {
-  constructor(private readonly repository: IUserRepository) {}
+  constructor(private readonly usersRepository: IUserRepository) {}
 
   async execute({ name, email, password, role }: Input): Promise<Output> {
     const user = UserEntity.newUser({ name, email, password, role })
 
-    const exists = await this.repository.findByEmail(email)
+    const exists = await this.usersRepository.findByEmail(email)
     if (exists) {
       throw new UnprocessableEntity('User already exists')
     }
 
-    return await this.repository.create(user)
+    return await this.usersRepository.create(user)
   }
 
   static build() {
