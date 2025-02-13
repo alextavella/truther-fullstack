@@ -1,5 +1,5 @@
 import { UserEntity } from '@/domain/entity/user'
-import type { IUserRepository } from '@/repositories/user.repository'
+import type { IUserRepository } from '@/infra/repositories/user.repository'
 import { FakeUserRepository } from '@/tests/fakes/fake-users.repository'
 import { faker } from '@faker-js/faker'
 import { UnprocessableEntity } from 'http-errors'

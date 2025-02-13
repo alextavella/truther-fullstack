@@ -1,4 +1,4 @@
-import { userRoles, userRolesDefault } from '@/db/schema'
+import { userRoles, userRolesDefault } from '@/infra/db/schema'
 import { z } from 'zod'
 
 const inputSchema = z.object({

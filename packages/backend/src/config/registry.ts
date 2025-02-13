@@ -1,4 +1,4 @@
-import { UserRepository } from '@/repositories/user.repository'
+import { UserRepository } from '@/infra/repositories/user.repository'
 import { FastifyInstance } from 'fastify'
 import { ModuleRegistry } from 'singleton-module-registry'
 

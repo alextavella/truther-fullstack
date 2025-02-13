@@ -1,6 +1,6 @@
-import { db } from '@/db'
-import { users } from '@/db/schema'
 import { UserEntity, type NewUser, type User } from '@/domain/entity/user'
+import { db } from '@/infra/db'
+import { users } from '@/infra/db/schema'
 import { eq, getTableColumns } from 'drizzle-orm'
 
 export interface IUserRepository {

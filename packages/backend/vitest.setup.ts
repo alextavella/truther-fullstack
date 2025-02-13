@@ -1,4 +1,4 @@
-import { db } from '@/db'
+import { db } from '@/infra/db'
 import { migrate } from 'drizzle-orm/mysql2/migrator'
 
 async function setup() {

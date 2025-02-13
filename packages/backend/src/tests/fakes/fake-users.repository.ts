@@ -1,5 +1,5 @@
 import type { NewUser, User } from '@/domain/entity/user'
-import type { IUserRepository } from '@/repositories/user.repository'
+import type { IUserRepository } from '@/infra/repositories/user.repository'
 import { randomUUID } from 'crypto'
 
 export class FakeUserRepository implements IUserRepository {

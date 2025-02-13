@@ -1,18 +1,9 @@
-import { userRoles, userRolesDefault } from '@/db/schema'
+import type { userEntitySchema } from '@/infra/db/schema'
 import crypto from 'node:crypto'
 import { z } from 'zod'
 
-// Schema
-const userSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  email: z.string(),
-  password: z.string(),
-  role: z.enum(userRoles).default(userRolesDefault).optional(),
-})
-
 // Types
-export type User = z.infer<typeof userSchema>
+export type User = z.infer<typeof userEntitySchema>
 export type NewUser = Omit<User, 'id'>
 
 // Config

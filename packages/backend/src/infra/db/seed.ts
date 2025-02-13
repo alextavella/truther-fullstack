@@ -1,4 +1,4 @@
-import { client, db } from '@/db'
+import { client, db } from '@/infra/db'
 import { users } from './schema'
 
 async function seed() {

@@ -1,10 +1,10 @@
 import { registry } from '@/config/registry'
 import { UserEntity, type NewUser, type User } from '@/domain/entity/user'
-import type { UseCase } from '@/domain/interfaces/usecase'
+import type { UseCase } from '@/infra/interfaces/usecase'
 import {
   UserRepository,
   type IUserRepository,
-} from '@/repositories/user.repository'
+} from '@/infra/repositories/user.repository'
 import { UnprocessableEntity } from 'http-errors'
 
 type Input = NewUser
