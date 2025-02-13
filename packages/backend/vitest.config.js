@@ -19,9 +19,6 @@ export default defineConfig({
       }
     },
   },
-  environments: {
-    DB_FILE_NAME: 'file:local.db'
-  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

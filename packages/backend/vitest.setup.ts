@@ -1,5 +1,5 @@
-import { migrate } from 'drizzle-orm/libsql/migrator'
-import { db } from './src/db'
+import { db } from '@/db'
+import { migrate } from 'drizzle-orm/mysql2/migrator'
 
 async function setup() {
   console.log('Running migrations...')
