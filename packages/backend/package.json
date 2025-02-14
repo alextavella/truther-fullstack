@@ -1,8 +1,6 @@
 {
-  "name": "server",
+  "name": "backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "scripts": {
     "migrate": "drizzle-kit generate && pnpm drizzle-kit migrate",
     "dev": "tsx watch --env-file=.env ./src/http/server.ts",
@@ -11,9 +9,6 @@
     "test": "vitest run",
     "test:cov": "vitest run --coverage"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@fastify/cors": "^10.0.2",
     "@fastify/swagger": "^9.4.2",
