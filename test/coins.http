@@ -1,0 +1,2 @@
+### Search coins
+GET http://localhost:3333/coins/search?query=ethereum
