@@ -1,32 +1,51 @@
-import { UserEntity, type NewUser, type User } from '@/domain/entity/user'
+import { type EditUser, type NewUser, type User } from '@/domain/entity/user'
 import { db } from '@/infra/db'
 import { users } from '@/infra/db/schema'
 import { eq, getTableColumns } from 'drizzle-orm'
 
 export interface IUserRepository {
   create(user: NewUser): Promise<User>
+  update(id: number, user: EditUser): Promise<User>
+  findByID(id: number): Promise<User | void>
   findByEmail(email: string): Promise<User | void>
 }
 
 export class UserRepository implements IUserRepository {
   async create(user: NewUser): Promise<User> {
-    const entity = UserEntity.newUser(user)
-    const created = await db.insert(users).values(entity).$returningId()
+    const id = await db
+      .insert(users)
+      .values(user)
+      .$returningId()
+      .then(r => r?.[0].id)
     return {
-      id: created?.[0].id,
-      name: entity.name,
-      email: entity.email,
-      password: entity.password,
-      role: entity?.role || null,
+      id,
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      role: user?.role || null,
     }
+  }
+
+  async update(id: number, user: EditUser): Promise<User> {
+    await db.update(users).set(user).where(eq(users.id, id))
+    return { ...user, id }
+  }
+
+  async findByID(id: number): Promise<User | void> {
+    const { ...rest } = getTableColumns(users)
+    return await db
+      .select({ ...rest })
+      .from(users)
+      .where(eq(users.id, id))
+      .then((r: User[]) => r?.[0])
   }
 
   async findByEmail(email: string): Promise<User | void> {
     const { ...rest } = getTableColumns(users)
-    const result = await db
+    return await db
       .select({ ...rest })
       .from(users)
       .where(eq(users.email, email))
-    return result?.[0]
+      .then((r: User[]) => r?.[0])
   }
 }

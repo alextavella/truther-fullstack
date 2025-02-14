@@ -19,5 +19,5 @@ export const userEntitySchema = z.object({
   name: z.string(),
   email: z.string(),
   password: z.string(),
-  role: z.enum(userRoles).default(userRolesDefault).nullable().optional(),
+  role: z.enum(userRoles).nullable().optional().default(userRolesDefault),
 })

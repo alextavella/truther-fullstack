@@ -5,6 +5,7 @@ import { z } from 'zod'
 // Types
 export type User = z.infer<typeof userEntitySchema>
 export type NewUser = Omit<User, 'id'>
+export type EditUser = Omit<User, 'id'>
 
 // Config
 const salt = crypto.randomBytes(32).toString('hex')
@@ -14,6 +15,11 @@ export class UserEntity {
   static newUser(user: NewUser): NewUser {
     const hashPassword = this.generatePassword(user.password)
     return { ...user, password: hashPassword.hash }
+  }
+
+  static editUser(id: number, user: EditUser): User {
+    const hashPassword = this.generatePassword(user.password)
+    return { ...user, id, password: hashPassword.hash }
   }
 
   private static generatePassword(password: string) {
