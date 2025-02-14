@@ -1,6 +1,8 @@
 import { registry } from '@/config/registry'
-import { CreateUsersUseCase } from './usecases/create-user.usecase'
+import { CreateUserUseCase } from './usecases/create-user.usecase'
+import { UpdateUserUseCase } from './usecases/update-user.usecase'
 
 export function registerProviders() {
-  registry.registerModule(CreateUsersUseCase.name, CreateUsersUseCase.build())
+  registry.registerModule(CreateUserUseCase.name, CreateUserUseCase.build())
+  registry.registerModule(UpdateUserUseCase.name, UpdateUserUseCase.build())
 }
