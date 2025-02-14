@@ -1,5 +1,8 @@
 import type { EditUser, NewUser, User, UserKeys } from '@/domain/entity/user'
-import type { PaginationOptions } from '@/infra/interfaces/pagination'
+import type {
+  Pagination,
+  PaginationOptions,
+} from '@/infra/interfaces/pagination'
 import type { IUserRepository } from '@/infra/repositories/user.repository'
 
 export class FakeUserRepository implements IUserRepository {
@@ -31,13 +34,17 @@ export class FakeUserRepository implements IUserRepository {
 
   async findAll(
     filters: Map<UserKeys, any>,
-    _: PaginationOptions,
-  ): Promise<User[]> {
+    opts: PaginationOptions,
+  ): Promise<Pagination<User>> {
     const filter = filterCommand(filters)
-    return Array.from(this._data.values())
+    const items = Array.from(this._data.values())
       .filter(filter.search('name'))
       .filter(filter.equal('email'))
       .filter(filter.equal('role'))
+    return {
+      items,
+      pagination: { ...opts, pageCount: items.length, total: items.length },
+    }
   }
 }
 
@@ -45,14 +52,14 @@ const filterCommand = (filters: Map<string, any>) => {
   return {
     search: (key: UserKeys) => {
       return (source: User) => {
-        if (!filters.get(key) || !source[key]) null
+        if (!filters.get(key) || !source[key]) return true
         if (key === 'role') return source[key] === filters.get(key)
         return source[key]?.toString().indexOf(filters.get(key)) >= 0
       }
     },
     equal: (key: UserKeys) => {
       return (source: User) => {
-        if (!filters.get(key) || !source[key]) null
+        if (!filters.get(key) || !source[key]) return true
         if (key === 'role') return source[key] === filters.get(key)
         return source[key]?.toString() === filters.get(key)
       }

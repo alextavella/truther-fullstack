@@ -1,11 +1,11 @@
-import type { userEntitySchema, userRoles } from '@/infra/db/schema'
+import type { userEntitySchema } from '@/infra/db/schema'
 import crypto from 'node:crypto'
 import { z } from 'zod'
 
 // Types
 export type User = z.infer<typeof userEntitySchema>
 export type UserKeys = keyof User
-export type UserRoles = typeof userRoles
+export type UserRoles = 'customer' | 'admin'
 export type NewUser = Omit<User, 'id'>
 export type EditUser = Omit<User, 'id'>
 export type ListUser = Omit<User, 'id' | 'password'>

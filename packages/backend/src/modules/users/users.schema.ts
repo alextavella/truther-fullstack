@@ -1,4 +1,8 @@
-import { userEntitySchema } from '@/infra/db/schema'
+import { userEntitySchema, userRoles } from '@/infra/db/schema'
+import {
+  paginationQuerySchema,
+  paginationResultSchema,
+} from '@/infra/interfaces/pagination'
 import { z } from 'zod'
 
 // Create user schemas
@@ -19,8 +23,8 @@ export const createUserSchema = {
 
 // Update user schemas
 const updateParamsSchema = z.object({ id: z.string() })
-const updateBodySchema = createBodySchema
-const updateResultSchema = createResultSchema
+const updateBodySchema = userEntitySchema.omit({ id: true })
+const updateResultSchema = userEntitySchema.omit({ id: true })
 export const updateUserSchema = {
   schema: {
     tags: ['Users'],
@@ -31,6 +35,32 @@ export const updateUserSchema = {
     body: updateBodySchema,
     response: {
       200: updateResultSchema,
+    },
+  },
+}
+
+// List users schemas
+const listQuerySchema = paginationQuerySchema.merge(
+  z.object({
+    name: z.string().optional(),
+    email: z.string().optional(),
+    role: z.enum(userRoles).optional(),
+  }),
+)
+const listUsersSchema = userEntitySchema.omit({ id: true, password: true })
+const listResultSchema = z.object({
+  items: listUsersSchema.array(),
+  pagination: paginationResultSchema,
+})
+export const listUserSchema = {
+  schema: {
+    tags: ['Users'],
+    description: 'List users',
+    summary: 'List users',
+    operationId: 'listUsers',
+    querystring: listQuerySchema,
+    response: {
+      200: listResultSchema,
     },
   },
 }
