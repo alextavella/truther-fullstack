@@ -8,6 +8,7 @@ import {
 } from 'fastify-type-provider-zod'
 
 import { setupRegistry } from '@/config/registry'
+import { errorHandler } from '@/infra/handlers/error.handler'
 import { setupOpenApi, startOpenApi } from './openai'
 import { setupRoutes } from './routes'
 
@@ -19,6 +20,8 @@ app.setSerializerCompiler(serializerCompiler)
 setupOpenApi(app)
 setupRegistry(app)
 setupRoutes(app)
+//
+app.setErrorHandler(errorHandler)
 ///
 ;(async function run() {
   await app.ready()
