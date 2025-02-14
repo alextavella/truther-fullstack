@@ -19,3 +19,9 @@ Content-Type: application/json
   "password": "12345678",
   "role": "admin"
 }
+
+### List users (name)
+GET http://localhost:3333/users/?page=1&pageSize=10&name=ale
+
+### List users (role
+GET http://localhost:3333/users/?page=1&pageSize=10&role=customer
