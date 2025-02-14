@@ -1,14 +1,17 @@
-import { UserEntity } from '@/domain/entity/user'
+import { UserEntity, type UserKeys } from '@/domain/entity/user'
 import type { IUserRepository } from '@/infra/repositories/user.repository'
+import { FakeLogger } from '@/tests/fakes/fake-logger'
 import { faker } from '@faker-js/faker'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeAll, beforeEach, describe, expect, it } from 'vitest'
+import type { PaginationOptions } from '../interfaces/pagination'
 import { UserRepository } from './user.repository'
 
 describe(UserRepository.name, () => {
   let sut: IUserRepository
+  const logger = new FakeLogger()
 
   beforeEach(() => {
-    sut = new UserRepository()
+    sut = new UserRepository(logger)
   })
 
   describe('create', () => {
@@ -96,6 +99,62 @@ describe(UserRepository.name, () => {
       expect(result?.email).toEqual(user.email)
       expect(result?.role).toEqual(user.role)
       expect(result?.password).toBeDefined()
+    })
+  })
+
+  describe('findAll', () => {
+    const options: PaginationOptions = { page: 1, pageSize: 10 }
+    const user = UserEntity.newUser({
+      name: faker.internet.username(),
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+      role: 'customer',
+    })
+
+    beforeAll(async () => {
+      await sut.create(user)
+    })
+
+    it('should filter users by name', async () => {
+      // Arrange
+      const filter = new Map<UserKeys, any>()
+      filter.set('name', user.name)
+      // Act
+      const result = await sut.findAll(filter, options)
+      // Assert
+      expect(result.items).toHaveLength(1)
+    })
+
+    it('should filter users by email', async () => {
+      // Arrange
+      const filter = new Map<UserKeys, any>()
+      filter.set('email', user.email)
+      // Act
+      const result = await sut.findAll(filter, options)
+      // Assert
+      expect(result.items).toHaveLength(1)
+    })
+
+    it('should filter users by role', async () => {
+      // Arrange
+      const filter = new Map<UserKeys, any>()
+      filter.set('role', user.role)
+      // Act
+      const result = await sut.findAll(filter, options)
+      // Assert
+      expect(result.items.length).toBeGreaterThanOrEqual(1)
+    })
+
+    it('should not return any user', async () => {
+      // Arrange
+      const filter = new Map<UserKeys, any>()
+      filter.set('name', faker.internet.username())
+      filter.set('email', faker.internet.email())
+      filter.set('role', '-')
+      // Act
+      const result = await sut.findAll(filter, options)
+      // Assert
+      expect(result.items).toHaveLength(0)
     })
   })
 })

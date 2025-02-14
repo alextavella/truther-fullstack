@@ -13,7 +13,9 @@ import { errorHandler } from '@/infra/handlers/error.handler'
 import { setupOpenApi, startOpenApi } from './openai'
 import { setupRoutes } from './routes'
 
-const app = fastify().withTypeProvider<ZodTypeProvider>()
+const app = fastify({
+  ignoreTrailingSlash: true,
+}).withTypeProvider<ZodTypeProvider>()
 app.register(fastifyCors, { origin: '*' })
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
