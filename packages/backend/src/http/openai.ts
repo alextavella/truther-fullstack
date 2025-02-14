@@ -1,3 +1,4 @@
+import { env } from '@/config/env'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUI from '@fastify/swagger-ui'
 import { FastifyInstance } from 'fastify'
@@ -30,6 +31,7 @@ export const setupOpenApi = async (app: FastifyInstance) => {
 }
 
 export const startOpenApi = (app: FastifyInstance) => {
+  if (env.NODE_ENV === 'production') return
   const yaml = app.swagger({ yaml: true })
   if (typeof yaml === 'string') {
     const output = resolve(__dirname, '../../../..', 'api', 'openapi.yaml')

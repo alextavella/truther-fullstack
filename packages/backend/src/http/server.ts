@@ -7,6 +7,7 @@ import {
   ZodTypeProvider,
 } from 'fastify-type-provider-zod'
 
+import { env } from '@/config/env'
 import { setupRegistry } from '@/config/registry'
 import { errorHandler } from '@/infra/handlers/error.handler'
 import { setupOpenApi, startOpenApi } from './openai'
@@ -25,7 +26,7 @@ app.setErrorHandler(errorHandler)
 ///
 ;(async function run() {
   await app.ready()
-  await app.listen({ port: 3333 })
+  await app.listen({ port: env.PORT })
   startOpenApi(app)
-  console.log(`🚀 Server running at http://localhost:3333/docs`)
+  console.log(`🚀 Server running at http://localhost:${env.PORT}/docs`)
 })()
