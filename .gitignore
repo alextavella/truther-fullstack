@@ -1,3 +1,4 @@
+.DS*
 # Node
 node_modules
 dist

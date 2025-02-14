@@ -26,7 +26,7 @@ app.setErrorHandler(errorHandler)
 ///
 ;(async function run() {
   await app.ready()
-  await app.listen({ port: env.PORT })
+  await app.listen({ port: +env.PORT })
   startOpenApi(app)
   console.log(`🚀 Server running at http://localhost:${env.PORT}/docs`)
 })()
