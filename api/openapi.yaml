@@ -8,11 +8,11 @@ components:
 paths:
   /coins/search:
     get:
-      operationId: listCoins
-      summary: List coins
+      operationId: searchCoins
+      summary: Search coins
       tags:
         - Coins
-      description: List coins
+      description: Search coins
       parameters:
         - schema:
             type: string

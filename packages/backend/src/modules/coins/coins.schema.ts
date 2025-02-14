@@ -2,21 +2,21 @@ import { coinEntitySchema } from '@/domain/entity/coin'
 import { z } from 'zod'
 
 // List coins schemas
-const listQuerySchema = z.object({
+const searchQuerySchema = z.object({
   query: z.string(),
 })
-const listResultSchema = z.object({
+const searchResultSchema = z.object({
   items: coinEntitySchema.array(),
 })
 export const listCoinsSchema = {
   schema: {
     tags: ['Coins'],
-    description: 'List coins',
-    summary: 'List coins',
-    operationId: 'listCoins',
-    querystring: listQuerySchema,
+    description: 'Search coins',
+    summary: 'Search coins',
+    operationId: 'searchCoins',
+    querystring: searchQuerySchema,
     response: {
-      200: listResultSchema,
+      200: searchResultSchema,
     },
   },
 }
