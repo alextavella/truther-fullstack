@@ -6,5 +6,16 @@ Content-Type: application/json
   "name": "Alex Tavella",
   "email": "alextavella@gmail.com",
   "password": "12345678",
+  "role": "customer"
+}
+
+### Update user
+PUT http://localhost:3333/users/2
+Content-Type: application/json
+
+{
+  "name": "Alex Tavella",
+  "email": "alextavella@gmail.com",
+  "password": "12345678",
   "role": "admin"
 }
