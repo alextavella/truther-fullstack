@@ -4,7 +4,9 @@
   "scripts": {
     "migrate": "drizzle-kit generate && pnpm drizzle-kit migrate",
     "dev": "tsx watch --env-file=.env ./src/http/server.ts",
-    "build": "tsc",
+    "prebuild": "rm -rf dist",
+    "build": "tsc --project tsconfig.build.json && tsc-alias",
+    "start": "node dist/http/server.js",
     "seed": "tsx --env-file=.env ./src/infra/db/seed.ts",
     "test": "vitest run",
     "test:cov": "vitest run --coverage"
@@ -28,6 +30,7 @@
     "@types/http-errors": "^2.0.4",
     "@types/node": "^22.13.2",
     "drizzle-kit": "^0.29.1",
+    "tsc-alias": "^1.8.10",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3"
   }
