@@ -6,6 +6,49 @@ info:
 components:
   schemas: {}
 paths:
+  /coins/search:
+    get:
+      operationId: listCoins
+      summary: List coins
+      tags:
+        - Coins
+      description: List coins
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: query
+          required: true
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        symbol:
+                          type: string
+                          nullable: true
+                        image:
+                          type: string
+                          nullable: true
+                      required:
+                        - id
+                        - name
+                      additionalProperties: false
+                required:
+                  - items
+                additionalProperties: false
   /users:
     post:
       operationId: createUser
