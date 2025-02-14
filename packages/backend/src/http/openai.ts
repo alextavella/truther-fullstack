@@ -12,8 +12,8 @@ export const setupOpenApi = async (app: FastifyInstance) => {
     openapi: {
       openapi: '3.0.0',
       info: {
-        title: 'Notes API',
-        description: 'Sample backend service',
+        title: 'Truther API',
+        description: 'Truther API Documentation',
         version: '1.0.0',
       },
       servers: [

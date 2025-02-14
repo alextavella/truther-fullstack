@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: Notes API
-  description: Sample backend service
+  title: Truther API
+  description: Truther API Documentation
   version: 1.0.0
 components:
   schemas: {}
@@ -9,10 +9,10 @@ paths:
   /users:
     post:
       operationId: createUser
-      summary: users
+      summary: Create user
       tags:
         - Users
-      description: Create an user
+      description: Create user
       requestBody:
         content:
           application/json:
@@ -23,7 +23,6 @@ paths:
                   type: string
                 email:
                   type: string
-                  format: email
                 password:
                   type: string
                 role:
@@ -31,6 +30,7 @@ paths:
                   enum:
                     - customer
                     - admin
+                  nullable: true
                   default: customer
               required:
                 - name
@@ -46,23 +46,87 @@ paths:
               schema:
                 type: object
                 properties:
-                  id:
-                    type: number
                   name:
                     type: string
                   email:
                     type: string
-                    format: email
                   password:
                     type: string
                   role:
                     type: string
+                    enum:
+                      - customer
+                      - admin
+                    nullable: true
+                    default: customer
                 required:
-                  - id
                   - name
                   - email
                   - password
-                  - role
+                additionalProperties: false
+  /users/{id}:
+    put:
+      operationId: updateUser
+      summary: Update user
+      tags:
+        - Users
+      description: Update user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                role:
+                  type: string
+                  enum:
+                    - customer
+                    - admin
+                  nullable: true
+                  default: customer
+              required:
+                - name
+                - email
+                - password
+              additionalProperties: false
+        required: true
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: id
+          required: true
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  password:
+                    type: string
+                  role:
+                    type: string
+                    enum:
+                      - customer
+                      - admin
+                    nullable: true
+                    default: customer
+                required:
+                  - name
+                  - email
+                  - password
                 additionalProperties: false
 servers:
   - url: http://localhost:3333

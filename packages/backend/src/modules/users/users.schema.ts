@@ -6,9 +6,9 @@ const createBodySchema = userEntitySchema.omit({ id: true })
 const createResultSchema = userEntitySchema.omit({ id: true })
 export const createUserSchema = {
   schema: {
-    description: 'Create an user',
     tags: ['Users'],
-    summary: 'users',
+    description: 'Create user',
+    summary: 'Create user',
     operationId: 'createUser',
     body: createBodySchema,
     response: {
@@ -23,9 +23,9 @@ const updateBodySchema = createBodySchema
 const updateResultSchema = createResultSchema
 export const updateUserSchema = {
   schema: {
-    description: 'Update an user',
     tags: ['Users'],
-    summary: 'users',
+    description: 'Update user',
+    summary: 'Update user',
     operationId: 'updateUser',
     params: updateParamsSchema,
     body: updateBodySchema,
