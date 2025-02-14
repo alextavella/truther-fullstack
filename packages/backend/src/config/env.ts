@@ -10,6 +10,8 @@ const envSchema = z.object({
   DB_USER: z.string().default('root'),
   DB_PASSWORD: z.string().default('root'),
   DB_NAME: z.string().default('truther'),
+  COINGECKO_API_URL: z.string(),
+  COINGECKO_TOKEN: z.string(),
 })
 
 export const env = envSchema.parse(process.env)
