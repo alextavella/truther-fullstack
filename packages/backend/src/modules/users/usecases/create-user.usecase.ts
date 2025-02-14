@@ -12,7 +12,7 @@ type Output = User
 
 export type ICreateUserUseCase = UseCase<Input, Output>
 
-export class CreateUsersUseCase implements ICreateUserUseCase {
+export class CreateUserUseCase implements ICreateUserUseCase {
   constructor(private readonly usersRepository: IUserRepository) {}
 
   async execute({ name, email, password, role }: Input): Promise<Output> {
@@ -27,6 +27,6 @@ export class CreateUsersUseCase implements ICreateUserUseCase {
   }
 
   static build() {
-    return new CreateUsersUseCase(registry.getModule(UserRepository.name))
+    return new CreateUserUseCase(registry.getModule(UserRepository.name))
   }
 }

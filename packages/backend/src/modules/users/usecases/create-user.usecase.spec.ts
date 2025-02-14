@@ -5,17 +5,17 @@ import { faker } from '@faker-js/faker'
 import { UnprocessableEntity } from 'http-errors'
 import { beforeEach, describe, expect, it } from 'vitest'
 import {
-  CreateUsersUseCase,
+  CreateUserUseCase,
   type ICreateUserUseCase,
 } from './create-user.usecase'
 
-describe(CreateUsersUseCase.name, () => {
+describe(CreateUserUseCase.name, () => {
   let sut: ICreateUserUseCase
   let usersRepository: IUserRepository
 
   beforeEach(() => {
     usersRepository = new FakeUserRepository()
-    sut = new CreateUsersUseCase(usersRepository)
+    sut = new CreateUserUseCase(usersRepository)
   })
 
   it('should call methods with correct params', async () => {
@@ -24,6 +24,7 @@ describe(CreateUsersUseCase.name, () => {
       name: faker.internet.username(),
       email: faker.internet.email(),
       password: faker.internet.password(),
+      role: 'customer',
     })
     // Act
     const result = await sut.execute(user)
@@ -40,9 +41,10 @@ describe(CreateUsersUseCase.name, () => {
       name: faker.internet.username(),
       email: faker.internet.email(),
       password: faker.internet.password(),
+      role: 'customer',
     })
     // Act
-    usersRepository.create(user)
+    await usersRepository.create(user)
     // Assert
     await expect(sut.execute(user)).rejects.toThrowError(UnprocessableEntity)
   })
