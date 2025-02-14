@@ -10,7 +10,10 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'lcov'],
       reportsDirectory: './coverage',
-      include: ['**/modules/**/*.usecase.ts'],
+      include: [
+        '**/infra/**/*.repositories.ts',
+        '**/modules/**/*.usecase.ts',
+      ],
       threshold: {
         statements: 80,
         branches: 80,
