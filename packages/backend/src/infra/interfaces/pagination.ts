@@ -1,8 +1,12 @@
 import { z } from 'zod'
 
 export const paginationQuerySchema = z.object({
-  page: z.number().min(1, 'Page must be greater than 0').optional().default(1),
-  pageSize: z
+  page: z.coerce
+    .number()
+    .min(1, 'Page must be greater than 0')
+    .optional()
+    .default(1),
+  pageSize: z.coerce
     .number()
     .min(10, 'Page must be greater or equal to 10')
     .optional()
