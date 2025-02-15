@@ -11,6 +11,10 @@ concurrency:
   group: ${{ github.head_ref }}
   cancel-in-progress: true
 
+env:
+  COINGECKO_API_URL: ""
+  COINGECKO_TOKEN: ""
+
 jobs:
   test:
     name: Build
