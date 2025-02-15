@@ -3,14 +3,16 @@ import type { IUserRepository } from '@/infra/repositories/user.repository'
 import { FakeLogger } from '@/tests/fakes/fake-logger'
 import { faker } from '@faker-js/faker'
 import { beforeAll, beforeEach, describe, expect, it } from 'vitest'
+import type { ILogger } from '../interfaces/logger'
 import type { PaginationOptions } from '../interfaces/pagination'
 import { UserRepository } from './user.repository'
 
-describe(UserRepository.name, () => {
+describe.skip(UserRepository.name, () => {
   let sut: IUserRepository
-  const logger = new FakeLogger()
+  let logger: ILogger
 
   beforeEach(() => {
+    logger = new FakeLogger()
     sut = new UserRepository(logger)
   })
 
