@@ -1,6 +1,6 @@
 import type { ICoinsRepository } from '@/infra/interfaces/repository'
 import { FakeCoinsRepository } from '@/tests/fakes/fake-coins.repository'
-import { mockSearchCoins } from '@/tests/mock/search-coins.mock'
+import { mockSearchCoins } from '@/tests/mock/coins/mock-search-coins'
 import { faker } from '@faker-js/faker'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import {

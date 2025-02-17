@@ -12,11 +12,12 @@ export const coinMarketEntitySchema = z.object({
   name: z.string(),
   symbol: z.string(),
   image: z.string(),
-  current_price: z.number(),
-  market_cap: z.number(),
-  market_cap_rank: z.number(),
-  total_volume: z.number(),
+  currentPrice: z.number(),
+  marketCap: z.number(),
+  marketCapRank: z.number(),
+  totalVolume: z.number(),
 })
 
 export type Coin = z.infer<typeof coinEntitySchema>
 export type CoinMarket = z.infer<typeof coinMarketEntitySchema>
+export type CoinCurrency = 'usd' | 'eur' | 'brl'
