@@ -16,10 +16,15 @@ import { colors } from '@/styles/theme'
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync()
 
-// Set the animation options. This is optional.
-SplashScreen.setOptions({
-  duration: 1000,
-  fade: true,
+import {
+  configureReanimatedLogger,
+  ReanimatedLogLevel,
+} from 'react-native-reanimated'
+
+// This is the default configuration
+configureReanimatedLogger({
+  level: ReanimatedLogLevel.warn,
+  strict: false,
 })
 
 export default function Layout() {
