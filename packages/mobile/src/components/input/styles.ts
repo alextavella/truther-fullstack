@@ -4,10 +4,10 @@ import { StyleSheet } from 'react-native'
 
 export const s = StyleSheet.create({
   container: {
-    width: '100%',
     alignSelf: 'center',
+    marginBottom: 24,
     position: 'relative',
-    marginBottom: 20,
+    width: '100%',
   },
   label: {
     backgroundColor: 'white',

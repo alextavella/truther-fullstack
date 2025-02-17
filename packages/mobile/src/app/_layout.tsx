@@ -1,7 +1,11 @@
-import { Stack } from 'expo-router'
-import * as SplashScreen from 'expo-splash-screen'
+import { AppProvider } from '@/providers/AppProvider'
+import { SplashScreen, Stack } from 'expo-router'
 import { useEffect } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import {
+  configureReanimatedLogger,
+  ReanimatedLogLevel,
+} from 'react-native-reanimated'
 
 import {
   DMSans_400Regular,
@@ -15,11 +19,6 @@ import { colors } from '@/styles/theme'
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync()
-
-import {
-  configureReanimatedLogger,
-  ReanimatedLogLevel,
-} from 'react-native-reanimated'
 
 // This is the default configuration
 configureReanimatedLogger({
@@ -46,14 +45,16 @@ export default function Layout() {
 
   return (
     <GestureHandlerRootView>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          contentStyle: {
-            backgroundColor: colors.gray[100],
-          },
-        }}
-      />
+      <AppProvider>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            contentStyle: {
+              backgroundColor: colors.gray[100],
+            },
+          }}
+        />
+      </AppProvider>
     </GestureHandlerRootView>
   )
 }
