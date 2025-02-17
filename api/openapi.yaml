@@ -6,6 +6,7 @@ info:
 components:
   schemas: {}
 paths:
+<<<<<<< HEAD
   /auth:
     post:
       operationId: getUser
@@ -57,6 +58,8 @@ paths:
                   - name
                   - email
                 additionalProperties: false
+=======
+>>>>>>> ff30e9a (feat: coins)
   /coins/search:
     get:
       operationId: searchCoins
