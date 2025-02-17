@@ -8,4 +8,5 @@ coverage
 # DB
 .docker
 *.db
-test/coing*.http
+# TEST
+test/coingecko.*

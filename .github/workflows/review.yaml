@@ -5,20 +5,44 @@ on:
   pull_request:
     types: [opened, reopened, synchronize]
     branches: [dev]
-    paths: ["**/*.ts"]
+    paths: ['**/*.ts']
 
 concurrency:
   group: ${{ github.head_ref }}
   cancel-in-progress: true
 
-env:
-  COINGECKO_API_URL: ""
-  COINGECKO_TOKEN: ""
-
 jobs:
   test:
-    name: Build
+    name: Review
     runs-on: ubuntu-latest
+
+    env:
+      NODE_ENV: 'test'
+      DB_DRIVER: 'mysql'
+      DB_HOST: '127.0.0.1'
+      DB_PORT: 3306
+      DB_NAME: 'testdb'
+      DB_USER: 'testuser'
+      DB_PASSWORD: 'testpassword'
+      COINGECKO_API_URL: ''
+      COINGECKO_TOKEN: ''
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ env.DB_PASSWORD }}
+          MYSQL_DATABASE: ${{ env.DB_NAME }}
+          MYSQL_USER: ${{ env.DB_USER }}
+          MYSQL_PASSWORD: ${{ env.DB_PASSWORD }}
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --host=localhost --user=root --password=root"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -38,7 +62,21 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --frozen-lockfile
+
+      - name: Wait for MySQL to be ready
+        run: |
+          for i in {30..0}; do
+            if mysql -h127.0.0.1 -utestuser -ptestpassword -e "SELECT 1" testdb &> /dev/null; then
+              echo "MySQL is ready!"
+              break
+            fi
+            echo 'Waiting for MySQL...'
+            sleep 2
+          done
+
+      - name: Migrate
+        run: pnpm run --filter backend migrate
 
       - name: Lint
         run: pnpm lint

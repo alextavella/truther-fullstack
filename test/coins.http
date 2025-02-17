@@ -1,0 +1,11 @@
+### Search coins
+GET http://localhost:3333/coins/search?query=bitcoin
+
+### Get coin market (ethereum)
+GET http://localhost:3333/coins/ethereum/market?currency=usd
+
+### Get coin market (bitcoin)
+GET http://localhost:3333/coins/bitcoin/market?currency=usd
+
+### Get coin market (not found)
+GET http://localhost:3333/coins/####/market
