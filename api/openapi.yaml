@@ -49,6 +49,63 @@ paths:
                 required:
                   - items
                 additionalProperties: false
+  /coins/{id}/market:
+    get:
+      operationId: getCoinMarket
+      summary: Get coin market
+      tags:
+        - Coins
+      description: Get coin market
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - usd
+              - eur
+              - brl
+            default: usd
+          in: query
+          name: currency
+          required: false
+        - schema:
+            type: string
+          in: path
+          name: id
+          required: true
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  symbol:
+                    type: string
+                  image:
+                    type: string
+                  currentPrice:
+                    type: number
+                  marketCap:
+                    type: number
+                  marketCapRank:
+                    type: number
+                  totalVolume:
+                    type: number
+                required:
+                  - id
+                  - name
+                  - symbol
+                  - image
+                  - currentPrice
+                  - marketCap
+                  - marketCapRank
+                  - totalVolume
+                additionalProperties: false
   /users:
     post:
       operationId: createUser
