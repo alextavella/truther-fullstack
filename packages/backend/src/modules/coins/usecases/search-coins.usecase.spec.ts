@@ -1,4 +1,5 @@
 import type { ICoinsRepository } from '@/infra/interfaces/repository'
+import { CoinGeckoRepository } from '@/infra/repositories/coingecko.repository'
 import { FakeCoinsRepository } from '@/tests/fakes/fake-coins.repository'
 import { mockSearchCoins } from '@/tests/mock/coins/mock-search-coins'
 import { faker } from '@faker-js/faker'
@@ -19,15 +20,27 @@ describe(SearchCoinsUseCase.name, () => {
 
   it('should call methods with correct params', async () => {
     // Arrange
-    const response = mockSearchCoins().coins
+    const query = faker.string.sample()
+    const response = mockSearchCoins().coins.map(
+      CoinGeckoRepository.searchCoinMapper,
+    )
     const searchSpy = vi
       .spyOn(coinsRepository, 'searchCoin')
       .mockResolvedValueOnce(response)
-    const query = faker.string.sample()
     // Act
     const result = await sut.execute({ query })
     // Assert
     expect(searchSpy).toHaveBeenCalledWith(query)
     expect(result).toStrictEqual({ items: response })
+  })
+
+  it('should return empty list when failed', async () => {
+    // Arrange
+    const query = faker.string.sample()
+    vi.spyOn(coinsRepository, 'searchCoin').mockRejectedValueOnce(new Error())
+    // Act
+    const result = await sut.execute({ query })
+    // Assert
+    expect(result.items).toHaveLength(0)
   })
 })

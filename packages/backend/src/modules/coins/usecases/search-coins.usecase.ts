@@ -15,7 +15,10 @@ export class SearchCoinsUseCase implements ISearchCoinsUseCase {
   constructor(private readonly coinsRepository: ICoinsRepository) {}
 
   async execute(input: Input): Promise<Output> {
-    const coins = await this.coinsRepository.searchCoin(input.query)
+    const coins = await this.coinsRepository
+      .searchCoin(input.query)
+      .catch(() => [])
+
     return { items: coins }
   }
 
