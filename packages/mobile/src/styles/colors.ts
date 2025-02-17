@@ -1,22 +1,19 @@
 export const colors = {
   gray: {
-    100: '#FCFDFE',
-    200: '#E1EBF4',
+    100: '#FFFFFF',
+    200: '#F1F3FA',
     300: '#C4D0DB',
     400: '#73808C',
     500: '#45525F',
     600: '#1A1F24',
   },
-
-  green: {
-    soft: '#E9F3EF',
-    light: '#3B9B62',
-    base: '#257F49',
-    dark: '#052914',
+  blue: {
+    base: '#12033A',
   },
-
+  green: {
+    base: '#23EBC3',
+  },
   red: {
-    light: '#FDEDED',
-    base: '#F94144',
+    base: '#DC143C',
   },
 }
