@@ -5,13 +5,15 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
-    // setupFiles: './vitest.setup.ts',
+    typecheck: {
+      tsconfig: 'tsconfig.json',
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov'],
       reportsDirectory: './coverage',
       include: [
-        '**/infra/**/*.repositories.ts',
+        '**/infra/**/*.repository.ts',
         '**/modules/**/*.usecase.ts',
       ],
       threshold: {

@@ -7,7 +7,7 @@ import type { ILogger } from '../interfaces/logger'
 import type { PaginationOptions } from '../interfaces/pagination'
 import { UserRepository } from './user.repository'
 
-describe.skip(UserRepository.name, () => {
+describe(UserRepository.name, () => {
   let sut: IUserRepository
   let logger: ILogger
 
