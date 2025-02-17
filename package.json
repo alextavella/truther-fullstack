@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "pnpm run /^dev:/",
     "dev:backend": "pnpm --filter backend dev",
+    "dev:mobile": "pnpm --filter mobile ios",
     "build": "pnpm run /^build:/",
     "build:backend": "pnpm --filter backend build",
     "start:backend": "pnpm --filter backend start",
