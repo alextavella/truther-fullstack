@@ -20,4 +20,6 @@ export const coinMarketEntitySchema = z.object({
 
 export type Coin = z.infer<typeof coinEntitySchema>
 export type CoinMarket = z.infer<typeof coinMarketEntitySchema>
-export type CoinCurrency = 'usd' | 'eur' | 'brl'
+
+export const coinCurrency = z.enum(['usd', 'eur', 'brl'])
+export type CoinCurrency = z.infer<typeof coinCurrency>

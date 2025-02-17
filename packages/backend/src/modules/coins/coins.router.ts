@@ -1,7 +1,8 @@
 import { registry } from '@/config/registry'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { registerProviders } from './coins.registry'
-import { listCoinsSchema } from './coins.schema'
+import { getCoinMarketSchema, listCoinsSchema } from './coins.schema'
+import { GetCoinMarketUseCase } from './usecases/get-coin-market.usecase'
 import { SearchCoinsUseCase } from './usecases/search-coins.usecase'
 
 export const coinsRouter: FastifyPluginAsyncZod = async app => {
@@ -10,5 +11,10 @@ export const coinsRouter: FastifyPluginAsyncZod = async app => {
     return await registry
       .getModule(SearchCoinsUseCase.name)
       .execute(Object.assign({}, request.query))
+  })
+  app.get('/:id/market', getCoinMarketSchema, async request => {
+    return await registry
+      .getModule(GetCoinMarketUseCase.name)
+      .execute(Object.assign({}, request.query, request.params))
   })
 }
