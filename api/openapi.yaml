@@ -94,7 +94,11 @@ paths:
                     type: number
                   marketCapRank:
                     type: number
-                  totalVolume:
+                  volume:
+                    type: number
+                  volumeHigh24h:
+                    type: number
+                  volumeHLow24h:
                     type: number
                 required:
                   - id
@@ -104,7 +108,9 @@ paths:
                   - currentPrice
                   - marketCap
                   - marketCapRank
-                  - totalVolume
+                  - volume
+                  - volumeHigh24h
+                  - volumeHLow24h
                 additionalProperties: false
   /users:
     post:

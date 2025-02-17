@@ -15,7 +15,9 @@ export const coinMarketEntitySchema = z.object({
   currentPrice: z.number(),
   marketCap: z.number(),
   marketCapRank: z.number(),
-  totalVolume: z.number(),
+  volume: z.number(),
+  volumeHigh24h: z.number(),
+  volumeHLow24h: z.number(),
 })
 
 export type Coin = z.infer<typeof coinEntitySchema>

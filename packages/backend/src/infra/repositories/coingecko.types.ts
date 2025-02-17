@@ -21,6 +21,8 @@ export type GetCoinMarketType = {
   market_cap: number
   market_cap_rank: number
   total_volume: number
+  high_24h: number
+  low_24h: number
 }
 
 export type GetCoinMarketResponse = Array<GetCoinMarketType>

@@ -89,7 +89,9 @@ export class CoinGeckoRepository implements ICoinsRepository {
       currentPrice: coin.current_price,
       marketCap: coin.market_cap,
       marketCapRank: coin.market_cap_rank,
-      totalVolume: coin.total_volume,
+      volume: coin.total_volume,
+      volumeHigh24h: coin.high_24h,
+      volumeHLow24h: coin.low_24h,
     }
   }
 
