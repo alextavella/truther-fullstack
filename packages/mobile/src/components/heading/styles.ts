@@ -5,7 +5,7 @@ export const s = StyleSheet.create({
   text: {
     fontFamily: fontFamily.bold,
     fontSize: 24,
-    marginBottom: 16,
+    marginBottom: 12,
     letterSpacing: -0.8,
     lineHeight: 34,
   },
