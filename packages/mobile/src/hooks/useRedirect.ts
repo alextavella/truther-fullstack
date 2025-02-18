@@ -11,6 +11,9 @@ export function useRedirect() {
     goToSignUp: () => {
       router.navigate(`/sign-up`)
     },
+    goToCoins: () => {
+      router.navigate(`/coins`)
+    },
     goToBack: () => {
       router.back()
     },
