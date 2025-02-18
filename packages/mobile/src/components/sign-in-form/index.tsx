@@ -2,6 +2,7 @@ import { Button } from '@/components/button'
 import { Input } from '@/components/input'
 import type { GetUser200 } from '@/data/model'
 import { getUser } from '@/data/store'
+import { useSession } from '@/providers/SessionProvider'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
 import { Alert, View, type ViewProps } from 'react-native'
@@ -18,6 +19,8 @@ export type SignInFormProps = ViewProps & {
 }
 
 export function SignInForm({ onSuccess, style, ...rest }: SignInFormProps) {
+  const { signIn } = useSession()
+
   const {
     control,
     handleSubmit,
@@ -33,7 +36,7 @@ export function SignInForm({ onSuccess, style, ...rest }: SignInFormProps) {
   const onSubmit = handleSubmit(async data => {
     getUser({ email: data.email, password: data.password })
       .then(res => {
-        // TODO: Response no storage
+        signIn(res)
         onSuccess?.(res)
       })
       .catch(() => Alert.alert('Error', 'Usuário ou senha inválidos'))

@@ -1,6 +1,6 @@
 import { AppProvider } from '@/providers/AppProvider'
-import { SplashScreen, Stack } from 'expo-router'
-import { useEffect } from 'react'
+import { SplashScreen } from 'expo-router'
+import React, { useEffect } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import {
   configureReanimatedLogger,
@@ -15,7 +15,7 @@ import {
 } from '@expo-google-fonts/dm-sans'
 
 import { Loading } from '@/components/loading'
-import { colors } from '@/styles/theme'
+import { WhiteBoard } from '@/components/white-board'
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync()
@@ -46,14 +46,7 @@ export default function Layout() {
   return (
     <GestureHandlerRootView>
       <AppProvider>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            contentStyle: {
-              backgroundColor: colors.gray[100],
-            },
-          }}
-        />
+        <WhiteBoard />
       </AppProvider>
     </GestureHandlerRootView>
   )
