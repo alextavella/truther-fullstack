@@ -1,8 +1,7 @@
 import { Heading } from '@/components/heading'
-import { SignInForm } from '@/components/sign-in-form'
+import { SignUpForm } from '@/components/sign-up-form'
 import { useRedirect } from '@/hooks/useRedirect'
 import { colors } from '@/styles/colors'
-import React from 'react'
 import {
   SafeAreaView,
   StyleSheet,
@@ -11,21 +10,23 @@ import {
   View,
 } from 'react-native'
 
-export default function SignIn() {
-  const { goToSignUp } = useRedirect()
+export default function SignUp() {
+  const { goToBack } = useRedirect()
 
   return (
     <View style={s.container}>
       <SafeAreaView />
       <View style={s.content}>
-        <Heading>Welcome back</Heading>
-        <Text>Sign in to your account</Text>
-        <SignInForm style={s.form} />
+        <Heading>Personal information</Heading>
+        <Text>
+          We ask for your personal information to verify your identity
+        </Text>
+        <SignUpForm style={s.form} />
       </View>
       <View style={s.footer}>
-        <Text>Don't have an account?</Text>
-        <TouchableOpacity onPress={goToSignUp}>
-          <Text style={s.redirect}>Sign Up</Text>
+        <Text>Already have an account?</Text>
+        <TouchableOpacity onPress={goToBack}>
+          <Text style={s.redirect}>Sign In</Text>
         </TouchableOpacity>
       </View>
     </View>
