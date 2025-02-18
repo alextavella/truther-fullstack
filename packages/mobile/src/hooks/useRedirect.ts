@@ -14,6 +14,9 @@ export function useRedirect() {
     goToCoins: () => {
       router.navigate(`/coins`)
     },
+    goToPrivate: () => {
+      router.navigate(`/(app)`)
+    },
     goToBack: () => {
       router.back()
     },
