@@ -13,12 +13,13 @@ export type EditUser = Omit<User, 'id'>
 export type ListUser = Omit<User, 'id' | 'password'>
 export type GetUser = Pick<User, 'email' | 'password'>
 
+export type AuthUser = Pick<User, 'name' | 'email' | 'role'>
+export type AuthToken = AuthUser & {
+  sub: string
+}
 export type AuthResult = {
   user: User
   token: string
-}
-export type AuthToken = Pick<User, 'name' | 'email' | 'role'> & {
-  sub: string
 }
 
 // Implementation
@@ -45,9 +46,7 @@ export class UserEntity {
         sub: user.id,
       },
       this.secret,
-      {
-        expiresIn: '1h',
-      },
+      { expiresIn: '1h' },
     )
     return { user, token }
   }

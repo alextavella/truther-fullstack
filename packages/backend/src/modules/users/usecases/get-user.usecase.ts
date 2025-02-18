@@ -1,5 +1,5 @@
 import { registry } from '@/config/registry'
-import { UserEntity, type GetUser } from '@/domain/entity/user'
+import { UserEntity, type GetUser, type UserRoles } from '@/domain/entity/user'
 import type { UseCase } from '@/infra/interfaces/usecase'
 import {
   UserRepository,
@@ -8,7 +8,12 @@ import {
 import { BadRequest } from 'http-errors'
 
 type Input = GetUser
-type Output = { access_token: string }
+type Output = {
+  access_token: string
+  uid: number
+  email: string
+  role: UserRoles | null
+}
 
 export type IGetUserUseCase = UseCase<Input, Output>
 
@@ -28,6 +33,9 @@ export class GetUserUseCase implements IGetUserUseCase {
 
     return {
       access_token: auth.token,
+      uid: user.id,
+      email: user.email,
+      role: user.role,
     }
   }
 
