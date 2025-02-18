@@ -9,6 +9,15 @@ Content-Type: application/json
   "role": "customer"
 }
 
+### Get user (auth)
+POST http://localhost:3333/users/auth
+Content-Type: application/json
+
+{
+  "email": "alextavella@gmail.com",
+  "password": "12345678"
+}
+
 ### Update user
 PUT http://localhost:3333/users/2
 Content-Type: application/json
