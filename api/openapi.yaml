@@ -290,8 +290,21 @@ paths:
                 properties:
                   access_token:
                     type: string
+                  uid:
+                    type: number
+                  email:
+                    type: string
+                  role:
+                    type: string
+                    enum:
+                      - customer
+                      - admin
+                    nullable: true
                 required:
                   - access_token
+                  - uid
+                  - email
+                  - role
                 additionalProperties: false
   /users/{id}:
     put:
