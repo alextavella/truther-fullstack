@@ -5,7 +5,12 @@
  * Truther API Documentation
  * OpenAPI spec version: 1.0.0
  */
+import type { GetUser200Role } from './getUser200Role'
 
 export type GetUser200 = {
   access_token: string
+  uid: number
+  email: string
+  /** @nullable */
+  role: GetUser200Role
 }
