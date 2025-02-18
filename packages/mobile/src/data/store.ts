@@ -7,9 +7,13 @@
  */
 import { useMutation, useQuery } from '@tanstack/react-query'
 import type {
+  DataTag,
+  DefinedInitialDataOptions,
+  DefinedUseQueryResult,
   MutationFunction,
   QueryFunction,
   QueryKey,
+  UndefinedInitialDataOptions,
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
@@ -20,6 +24,8 @@ import type {
   CreateUserBody,
   GetCoinMarket200,
   GetCoinMarketParams,
+  GetUser200,
+  GetUserBody,
   ListUsers200,
   ListUsersParams,
   SearchCoins200,
@@ -61,10 +67,8 @@ export const getSearchCoinsQueryOptions = <
 >(
   params: SearchCoinsParams,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof searchCoins>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof searchCoins>>, TError, TData>
     >
     request?: SecondParameter<typeof customInstance>
   },
@@ -81,7 +85,7 @@ export const getSearchCoinsQueryOptions = <
     Awaited<ReturnType<typeof searchCoins>>,
     TError,
     TData
-  > & { queryKey: QueryKey }
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
 export type SearchCoinsQueryResult = NonNullable<
@@ -89,6 +93,64 @@ export type SearchCoinsQueryResult = NonNullable<
 >
 export type SearchCoinsQueryError = ErrorType<unknown>
 
+export function useSearchCoins<
+  TData = Awaited<ReturnType<typeof searchCoins>>,
+  TError = ErrorType<unknown>,
+>(
+  params: SearchCoinsParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof searchCoins>>, TError, TData>
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof searchCoins>>,
+          TError,
+          Awaited<ReturnType<typeof searchCoins>>
+        >,
+        'initialData'
+      >
+    request?: SecondParameter<typeof customInstance>
+  },
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useSearchCoins<
+  TData = Awaited<ReturnType<typeof searchCoins>>,
+  TError = ErrorType<unknown>,
+>(
+  params: SearchCoinsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof searchCoins>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof searchCoins>>,
+          TError,
+          Awaited<ReturnType<typeof searchCoins>>
+        >,
+        'initialData'
+      >
+    request?: SecondParameter<typeof customInstance>
+  },
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useSearchCoins<
+  TData = Awaited<ReturnType<typeof searchCoins>>,
+  TError = ErrorType<unknown>,
+>(
+  params: SearchCoinsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof searchCoins>>, TError, TData>
+    >
+    request?: SecondParameter<typeof customInstance>
+  },
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
 /**
  * @summary Search coins
  */
@@ -99,18 +161,18 @@ export function useSearchCoins<
 >(
   params: SearchCoinsParams,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof searchCoins>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof searchCoins>>, TError, TData>
     >
     request?: SecondParameter<typeof customInstance>
   },
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
   const queryOptions = getSearchCoinsQueryOptions(params, options)
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey
+    queryKey: DataTag<QueryKey, TData, TError>
   }
 
   query.queryKey = queryOptions.queryKey
@@ -148,10 +210,8 @@ export const getGetCoinMarketQueryOptions = <
   id: string,
   params?: GetCoinMarketParams,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof getCoinMarket>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getCoinMarket>>, TError, TData>
     >
     request?: SecondParameter<typeof customInstance>
   },
@@ -174,7 +234,7 @@ export const getGetCoinMarketQueryOptions = <
     Awaited<ReturnType<typeof getCoinMarket>>,
     TError,
     TData
-  > & { queryKey: QueryKey }
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
 export type GetCoinMarketQueryResult = NonNullable<
@@ -182,6 +242,67 @@ export type GetCoinMarketQueryResult = NonNullable<
 >
 export type GetCoinMarketQueryError = ErrorType<unknown>
 
+export function useGetCoinMarket<
+  TData = Awaited<ReturnType<typeof getCoinMarket>>,
+  TError = ErrorType<unknown>,
+>(
+  id: string,
+  params: undefined | GetCoinMarketParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getCoinMarket>>, TError, TData>
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getCoinMarket>>,
+          TError,
+          Awaited<ReturnType<typeof getCoinMarket>>
+        >,
+        'initialData'
+      >
+    request?: SecondParameter<typeof customInstance>
+  },
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetCoinMarket<
+  TData = Awaited<ReturnType<typeof getCoinMarket>>,
+  TError = ErrorType<unknown>,
+>(
+  id: string,
+  params?: GetCoinMarketParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getCoinMarket>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getCoinMarket>>,
+          TError,
+          Awaited<ReturnType<typeof getCoinMarket>>
+        >,
+        'initialData'
+      >
+    request?: SecondParameter<typeof customInstance>
+  },
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetCoinMarket<
+  TData = Awaited<ReturnType<typeof getCoinMarket>>,
+  TError = ErrorType<unknown>,
+>(
+  id: string,
+  params?: GetCoinMarketParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getCoinMarket>>, TError, TData>
+    >
+    request?: SecondParameter<typeof customInstance>
+  },
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
 /**
  * @summary Get coin market
  */
@@ -193,18 +314,18 @@ export function useGetCoinMarket<
   id: string,
   params?: GetCoinMarketParams,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof getCoinMarket>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getCoinMarket>>, TError, TData>
     >
     request?: SecondParameter<typeof customInstance>
   },
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
   const queryOptions = getGetCoinMarketQueryOptions(id, params, options)
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey
+    queryKey: DataTag<QueryKey, TData, TError>
   }
 
   query.queryKey = queryOptions.queryKey
@@ -327,10 +448,8 @@ export const getListUsersQueryOptions = <
 >(
   params?: ListUsersParams,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof listUsers>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listUsers>>, TError, TData>
     >
     request?: SecondParameter<typeof customInstance>
   },
@@ -347,7 +466,7 @@ export const getListUsersQueryOptions = <
     Awaited<ReturnType<typeof listUsers>>,
     TError,
     TData
-  > & { queryKey: QueryKey }
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
 export type ListUsersQueryResult = NonNullable<
@@ -355,6 +474,64 @@ export type ListUsersQueryResult = NonNullable<
 >
 export type ListUsersQueryError = ErrorType<unknown>
 
+export function useListUsers<
+  TData = Awaited<ReturnType<typeof listUsers>>,
+  TError = ErrorType<unknown>,
+>(
+  params: undefined | ListUsersParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listUsers>>, TError, TData>
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listUsers>>,
+          TError,
+          Awaited<ReturnType<typeof listUsers>>
+        >,
+        'initialData'
+      >
+    request?: SecondParameter<typeof customInstance>
+  },
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useListUsers<
+  TData = Awaited<ReturnType<typeof listUsers>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: ListUsersParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listUsers>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listUsers>>,
+          TError,
+          Awaited<ReturnType<typeof listUsers>>
+        >,
+        'initialData'
+      >
+    request?: SecondParameter<typeof customInstance>
+  },
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useListUsers<
+  TData = Awaited<ReturnType<typeof listUsers>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: ListUsersParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listUsers>>, TError, TData>
+    >
+    request?: SecondParameter<typeof customInstance>
+  },
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
 /**
  * @summary List users
  */
@@ -365,23 +542,113 @@ export function useListUsers<
 >(
   params?: ListUsersParams,
   options?: {
-    query?: UseQueryOptions<
-      Awaited<ReturnType<typeof listUsers>>,
-      TError,
-      TData
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listUsers>>, TError, TData>
     >
     request?: SecondParameter<typeof customInstance>
   },
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
   const queryOptions = getListUsersQueryOptions(params, options)
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey
+    queryKey: DataTag<QueryKey, TData, TError>
   }
 
   query.queryKey = queryOptions.queryKey
 
   return query
+}
+
+/**
+ * Get user
+ * @summary Get user
+ */
+export const getUser = (
+  getUserBody: BodyType<GetUserBody>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
+) => {
+  return customInstance<GetUser200>(
+    {
+      url: `/users/auth`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: getUserBody,
+      signal,
+    },
+    options,
+  )
+}
+
+export const getGetUserMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof getUser>>,
+    TError,
+    { data: BodyType<GetUserBody> },
+    TContext
+  >
+  request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof getUser>>,
+  TError,
+  { data: BodyType<GetUserBody> },
+  TContext
+> => {
+  const mutationKey = ['getUser']
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof getUser>>,
+    { data: BodyType<GetUserBody> }
+  > = props => {
+    const { data } = props ?? {}
+
+    return getUser(data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type GetUserMutationResult = NonNullable<
+  Awaited<ReturnType<typeof getUser>>
+>
+export type GetUserMutationBody = BodyType<GetUserBody>
+export type GetUserMutationError = ErrorType<unknown>
+
+/**
+ * @summary Get user
+ */
+export const useGetUser = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof getUser>>,
+    TError,
+    { data: BodyType<GetUserBody> },
+    TContext
+  >
+  request?: SecondParameter<typeof customInstance>
+}): UseMutationResult<
+  Awaited<ReturnType<typeof getUser>>,
+  TError,
+  { data: BodyType<GetUserBody> },
+  TContext
+> => {
+  const mutationOptions = getGetUserMutationOptions(options)
+
+  return useMutation(mutationOptions)
 }
 
 /**
