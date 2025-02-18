@@ -258,6 +258,41 @@ paths:
                   - items
                   - pagination
                 additionalProperties: false
+  /users/auth:
+    post:
+      operationId: getUser
+      summary: Get user
+      tags:
+        - Users
+      description: Get user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - email
+                - password
+              additionalProperties: false
+        required: true
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                required:
+                  - access_token
+                additionalProperties: false
   /users/{id}:
     put:
       operationId: updateUser
