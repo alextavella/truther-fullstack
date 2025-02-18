@@ -1,4 +1,6 @@
+import { env } from '@/config/env'
 import type { userEntitySchema } from '@/infra/db/schema'
+import jwt from 'jsonwebtoken'
 import crypto from 'node:crypto'
 import { z } from 'zod'
 
@@ -9,12 +11,20 @@ export type UserRoles = 'customer' | 'admin'
 export type NewUser = Omit<User, 'id'>
 export type EditUser = Omit<User, 'id'>
 export type ListUser = Omit<User, 'id' | 'password'>
+export type GetUser = Pick<User, 'email' | 'password'>
 
-// Config
-const salt = crypto.randomBytes(32).toString('hex')
+export type AuthResult = {
+  user: User
+  token: string
+}
+export type AuthToken = Pick<User, 'name' | 'email' | 'role'> & {
+  sub: string
+}
 
 // Implementation
 export class UserEntity {
+  static readonly secret: string = env.AUTH_SECRET
+
   static newUser(user: NewUser): NewUser {
     const hashPassword = this.generatePassword(user.password)
     return { ...user, password: hashPassword.hash }
@@ -25,19 +35,36 @@ export class UserEntity {
     return { ...user, id, password: hashPassword.hash }
   }
 
+  static authUser(user: User, password: string): AuthResult | null {
+    if (!this.validPassword(password, user.password)) return null
+    const token = jwt.sign(
+      {
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        sub: user.id,
+      },
+      this.secret,
+      {
+        expiresIn: '1h',
+      },
+    )
+    return { user, token }
+  }
+
   private static generatePassword(password: string) {
     const genHash = crypto
-      .pbkdf2Sync(password, salt, 10000, 64, 'sha512')
+      .pbkdf2Sync(password, this.secret, 10000, 64, 'sha512')
       .toString('hex')
     return {
-      salt: salt,
+      salt: this.secret,
       hash: genHash,
     }
   }
 
   private static validPassword(password: string, hash: string) {
     const checkHash = crypto
-      .pbkdf2Sync(password, salt, 10000, 64, 'sha512')
+      .pbkdf2Sync(password, this.secret, 10000, 64, 'sha512')
       .toString('hex')
     return hash === checkHash
   }

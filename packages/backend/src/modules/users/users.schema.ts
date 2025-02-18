@@ -64,3 +64,21 @@ export const listUserSchema = {
     },
   },
 }
+
+// Get user schemas (auth)
+const getBodySchema = userEntitySchema.pick({ email: true, password: true })
+const getResultSchema = z.object({
+  access_token: z.string(),
+})
+export const getUserSchema = {
+  schema: {
+    tags: ['Users'],
+    description: 'Get user',
+    summary: 'Get user',
+    operationId: 'getUser',
+    body: getBodySchema,
+    response: {
+      200: getResultSchema,
+    },
+  },
+}
