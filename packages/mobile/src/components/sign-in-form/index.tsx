@@ -1,8 +1,10 @@
 import { Button } from '@/components/button'
 import { Input } from '@/components/input'
+import type { GetUser200 } from '@/data/model'
+import { getUser } from '@/data/store'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
-import { View, type ViewProps } from 'react-native'
+import { Alert, View, type ViewProps } from 'react-native'
 import { signInSchema } from './schema'
 import { s } from './styles'
 
@@ -12,7 +14,7 @@ type Inputs = {
 }
 
 export type SignInFormProps = ViewProps & {
-  onSuccess?: (data: Inputs) => void
+  onSuccess?: (data: GetUser200) => void
 }
 
 export function SignInForm({ onSuccess, style, ...rest }: SignInFormProps) {
@@ -23,13 +25,18 @@ export function SignInForm({ onSuccess, style, ...rest }: SignInFormProps) {
   } = useForm<Inputs>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
-      email: 'alextavella@outlook.com',
-      password: '',
+      email: 'alextavella@gmail.com',
+      password: '12345678',
     },
   })
 
   const onSubmit = handleSubmit(async data => {
-    console.log(data)
+    getUser({ email: data.email, password: data.password })
+      .then(res => {
+        // TODO: Response no storage
+        onSuccess?.(res)
+      })
+      .catch(() => Alert.alert('Error', 'Usuário ou senha inválidos'))
   })
 
   return (

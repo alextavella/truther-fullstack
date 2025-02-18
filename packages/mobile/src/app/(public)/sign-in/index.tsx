@@ -12,7 +12,7 @@ import {
 } from 'react-native'
 
 export default function SignIn() {
-  const { goToSignUp } = useRedirect()
+  const { goToSignUp, goToCoins } = useRedirect()
 
   return (
     <View style={s.container}>
@@ -20,7 +20,7 @@ export default function SignIn() {
       <View style={s.content}>
         <Heading>Welcome back</Heading>
         <Text>Sign in to your account</Text>
-        <SignInForm style={s.form} />
+        <SignInForm style={s.form} onSuccess={goToCoins} />
       </View>
       <View style={s.footer}>
         <Text>Don't have an account?</Text>
