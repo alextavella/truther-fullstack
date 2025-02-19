@@ -42,10 +42,10 @@ function ButtonText({ style, ...rest }: ButtonTextProps) {
   return <Text {...rest} style={[s.title, style]} />
 }
 
-type ButtonIconProps = Pick<IconProps, 'name'>
+type ButtonIconProps = Pick<IconProps, 'name' | 'color'>
 
-function ButtonIcon({ name }: ButtonIconProps) {
-  return <Icon name={name} color={colors.gray[100]} size={24} />
+function ButtonIcon({ name, color = colors.gray[100] }: ButtonIconProps) {
+  return <Icon name={name} color={color} size={24} />
 }
 
 export const Button = {
