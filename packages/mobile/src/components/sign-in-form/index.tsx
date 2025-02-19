@@ -35,9 +35,9 @@ export function SignInForm({ onSuccess, style, ...rest }: SignInFormProps) {
 
   const onSubmit = handleSubmit(async data => {
     getUser({ email: data.email, password: data.password })
-      .then(res => {
-        signIn(res)
-        onSuccess?.(res)
+      .then(user => {
+        signIn(user)
+        onSuccess?.(user)
       })
       .catch(() => Alert.alert('Error', 'Usuário ou senha inválidos'))
   })

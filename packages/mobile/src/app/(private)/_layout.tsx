@@ -1,19 +1,30 @@
 import { Loading } from '@/components/loading'
-import { WhiteBoard } from '@/components/white-board'
 import { useSession } from '@/providers/SessionProvider'
-import { Redirect } from 'expo-router'
+import { colors } from '@/styles/colors'
+import { Redirect, Slot, Stack } from 'expo-router'
 import React from 'react'
 
 export default function PrivateLayout() {
-  const { isLoading, session } = useSession()
+  const { isLoading, isSigned } = useSession()
 
   if (isLoading) {
     return <Loading />
   }
 
-  if (!session) {
+  if (!isSigned) {
     return <Redirect href="/sign-in" />
   }
 
-  return <WhiteBoard />
+  return (
+    <Stack
+      screenOptions={{
+        headerShown: false,
+        contentStyle: {
+          backgroundColor: colors.gray[100],
+        },
+      }}
+    >
+      <Slot />
+    </Stack>
+  )
 }

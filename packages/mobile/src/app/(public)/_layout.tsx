@@ -1,7 +1,9 @@
-import { colors } from '@/styles/colors'
 import { Stack } from 'expo-router'
+import React from 'react'
 
-export function WhiteBoard() {
+import { colors } from '@/styles/colors'
+
+export default function PublicLayout() {
   return (
     <Stack
       screenOptions={{

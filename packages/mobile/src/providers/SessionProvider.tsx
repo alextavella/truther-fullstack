@@ -1,26 +1,30 @@
-import type { GetUser200 } from '@/data/model'
+import { SESSION_KEY } from '@/config/session'
+import type { CreateUser201, GetUser200 } from '@/data/model'
 import { useStorageState } from '@/hooks/useStorageState'
-import React, { createContext, useContext, type PropsWithChildren } from 'react'
+import { setAuthorization } from '@/lib/api'
+import React, { type PropsWithChildren } from 'react'
 
-type SessionData = GetUser200
+type SessionData = GetUser200 | CreateUser201
 
-const AuthContext = createContext<{
+const AuthContext = React.createContext<{
   signIn: (user: SessionData) => void
   signOut: () => void
   user: SessionData | null
   session: string | null
   isLoading: boolean
+  isSigned: boolean
 }>({
   signIn: () => null,
   signOut: () => null,
   user: null,
   session: null,
   isLoading: false,
+  isSigned: false,
 })
 
 // This hook can be used to access the user info.
 export function useSession() {
-  const value = useContext(AuthContext)
+  const value = React.useContext(AuthContext)
   if (process.env.NODE_ENV !== 'production') {
     if (!value) {
       throw new Error('useSession must be wrapped in a <SessionProvider />')
@@ -30,26 +34,28 @@ export function useSession() {
   return value
 }
 
-const SESSION_KEY = '@truther/session'
-
 export function SessionProvider({ children }: PropsWithChildren) {
-  const [user, setUser] = React.useState<SessionData | null>(null)
   const [[isLoading, session], setSession] = useStorageState(SESSION_KEY)
+
+  const user = React.useMemo(() => {
+    if (!session) return null
+    return JSON.parse(session) || null
+  }, [])
 
   return (
     <AuthContext.Provider
       value={{
-        signIn: (user: SessionData) => {
-          setUser(user)
-          setSession(user?.access_token)
+        signIn: async (user: SessionData) => {
+          setSession(JSON.stringify(user))
+          setAuthorization(user.access_token)
         },
         signOut: () => {
-          setUser(null)
           setSession(null)
         },
         user,
         session,
         isLoading,
+        isSigned: !!session && !!user,
       }}
     >
       {children}

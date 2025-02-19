@@ -1,7 +1,8 @@
 import { Button } from '@/components/button'
 import { Input } from '@/components/input'
-import { CreateUserBodyRole } from '@/data/model'
+import { CreateUserBodyRole, type CreateUser201 } from '@/data/model'
 import { createUser } from '@/data/store'
+import { useSession } from '@/providers/SessionProvider'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
 import { View, type ViewProps } from 'react-native'
@@ -15,10 +16,12 @@ type Inputs = {
 }
 
 export type SignUpFormProps = ViewProps & {
-  onSuccess?: (data: Inputs) => void
+  onSuccess?: (user: CreateUser201) => void
 }
 
 export function SignUpForm({ onSuccess, style, ...rest }: SignUpFormProps) {
+  const { signIn } = useSession()
+
   const {
     control,
     handleSubmit,
@@ -39,7 +42,10 @@ export function SignUpForm({ onSuccess, style, ...rest }: SignUpFormProps) {
       password: data.password,
       role: CreateUserBodyRole.customer,
     })
-      .then(() => onSuccess?.(data))
+      .then(user => {
+        signIn(user)
+        onSuccess?.(user)
+      })
       .catch(console.error)
   })
 
