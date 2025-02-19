@@ -6,6 +6,54 @@ info:
 components:
   schemas: {}
 paths:
+  /auth:
+    post:
+      operationId: getUser
+      summary: Get user
+      tags:
+        - Auth
+      description: Get user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - email
+                - password
+              additionalProperties: false
+        required: true
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                  uid:
+                    type: number
+                  email:
+                    type: string
+                  role:
+                    type: string
+                    enum:
+                      - customer
+                      - admin
+                    nullable: true
+                required:
+                  - access_token
+                  - uid
+                  - email
+                  - role
+                additionalProperties: false
   /coins/search:
     get:
       operationId: searchCoins
@@ -170,6 +218,63 @@ paths:
                   - email
                   - password
                 additionalProperties: false
+    put:
+      operationId: updateUser
+      summary: Update user
+      tags:
+        - Users
+      description: Update user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                role:
+                  type: string
+                  enum:
+                    - customer
+                    - admin
+                  nullable: true
+                  default: customer
+              required:
+                - name
+                - email
+                - password
+              additionalProperties: false
+        required: true
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  password:
+                    type: string
+                  role:
+                    type: string
+                    enum:
+                      - customer
+                      - admin
+                    nullable: true
+                    default: customer
+                required:
+                  - name
+                  - email
+                  - password
+                additionalProperties: false
     get:
       operationId: listUsers
       summary: List users
@@ -222,6 +327,8 @@ paths:
                     items:
                       type: object
                       properties:
+                        id:
+                          type: number
                         name:
                           type: string
                         email:
@@ -234,6 +341,7 @@ paths:
                           nullable: true
                           default: customer
                       required:
+                        - id
                         - name
                         - email
                       additionalProperties: false
@@ -257,118 +365,6 @@ paths:
                 required:
                   - items
                   - pagination
-                additionalProperties: false
-  /users/auth:
-    post:
-      operationId: getUser
-      summary: Get user
-      tags:
-        - Users
-      description: Get user
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                password:
-                  type: string
-              required:
-                - email
-                - password
-              additionalProperties: false
-        required: true
-      responses:
-        "200":
-          description: Default Response
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  access_token:
-                    type: string
-                  uid:
-                    type: number
-                  email:
-                    type: string
-                  role:
-                    type: string
-                    enum:
-                      - customer
-                      - admin
-                    nullable: true
-                required:
-                  - access_token
-                  - uid
-                  - email
-                  - role
-                additionalProperties: false
-  /users/{id}:
-    put:
-      operationId: updateUser
-      summary: Update user
-      tags:
-        - Users
-      description: Update user
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                password:
-                  type: string
-                role:
-                  type: string
-                  enum:
-                    - customer
-                    - admin
-                  nullable: true
-                  default: customer
-              required:
-                - name
-                - email
-                - password
-              additionalProperties: false
-        required: true
-      parameters:
-        - schema:
-            type: string
-          in: path
-          name: id
-          required: true
-      responses:
-        "200":
-          description: Default Response
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  email:
-                    type: string
-                  password:
-                    type: string
-                  role:
-                    type: string
-                    enum:
-                      - customer
-                      - admin
-                    nullable: true
-                    default: customer
-                required:
-                  - name
-                  - email
-                  - password
                 additionalProperties: false
 servers:
   - url: http://localhost:3333
