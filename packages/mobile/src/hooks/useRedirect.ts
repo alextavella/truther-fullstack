@@ -14,6 +14,9 @@ export function useRedirect() {
     goToCoins: () => {
       router.navigate(`/coins`)
     },
+    goToSearchCoins: (slug: string) => {
+      router.navigate(`/coins/${slug}/search`)
+    },
     goToBack: () => {
       router.back()
     },
