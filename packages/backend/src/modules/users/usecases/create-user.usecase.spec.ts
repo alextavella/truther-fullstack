@@ -1,9 +1,10 @@
-import { UserEntity } from '@/domain/entity/user'
+import { UserEntity, type AuthToken } from '@/domain/entity/user'
 import type { IUserRepository } from '@/infra/repositories/user.repository'
 import { FakeUserRepository } from '@/tests/fakes/fake-users.repository'
 import { faker } from '@faker-js/faker'
-import { UnprocessableEntity } from 'http-errors'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { InternalServerError, UnprocessableEntity } from 'http-errors'
+import jwt from 'jsonwebtoken'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import {
   CreateUserUseCase,
   type ICreateUserUseCase,
@@ -26,13 +27,24 @@ describe(CreateUserUseCase.name, () => {
       password: faker.internet.password(),
       role: 'customer',
     })
+    const payload = UserEntity.newUser(user)
+    const created = await usersRepository.create(user)
     // Act
+    const findByEmailSpy = vi
+      .spyOn(usersRepository, 'findByEmail')
+      .mockResolvedValue(void 0)
+    const createUserSpy = vi
+      .spyOn(usersRepository, 'create')
+      .mockResolvedValue(created)
     const result = await sut.execute(user)
+    const decoded = jwt.decode(result.access_token) as AuthToken
     // Assert
-    expect(result.id).toBeDefined()
-    expect(result.name).toEqual(user.name)
-    expect(result.email).toEqual(user.email)
-    expect(result.password).toBeDefined()
+    expect(findByEmailSpy).toHaveBeenCalledWith(user.email)
+    expect(createUserSpy).toHaveBeenCalledWith(payload)
+    expect(result.uid).toEqual(created.id)
+    expect(result.name).toEqual(decoded.name)
+    expect(result.email).toEqual(decoded.email)
+    expect(result.role).toEqual(decoded.role)
   })
 
   it('should throw 422 when user already exists', async () => {
@@ -47,5 +59,19 @@ describe(CreateUserUseCase.name, () => {
     await usersRepository.create(user)
     // Assert
     await expect(sut.execute(user)).rejects.toThrowError(UnprocessableEntity)
+  })
+
+  it('should throw 500 when failed on creating user', async () => {
+    // Arrange
+    const user = UserEntity.newUser({
+      name: faker.internet.username(),
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+      role: 'customer',
+    })
+    // Act
+    vi.spyOn(usersRepository, 'create').mockRejectedValue(new Error())
+    // Assert
+    await expect(sut.execute(user)).rejects.toThrowError(InternalServerError)
   })
 })
