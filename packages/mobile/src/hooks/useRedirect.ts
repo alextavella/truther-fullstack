@@ -3,7 +3,7 @@ import { router } from 'expo-router'
 export function useRedirect() {
   return {
     goToHome: () => {
-      router.navigate('/')
+      router.dismissTo('/')
     },
     goToSignIn: () => {
       router.navigate(`/sign-in`)
@@ -13,9 +13,6 @@ export function useRedirect() {
     },
     goToCoins: () => {
       router.navigate(`/coins`)
-    },
-    goToPrivate: () => {
-      router.navigate(`/(app)`)
     },
     goToBack: () => {
       router.back()

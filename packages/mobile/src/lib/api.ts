@@ -1,8 +1,12 @@
-import Axios, { AxiosRequestConfig, type AxiosError } from 'axios'
+import Axios, { type AxiosError, type AxiosRequestConfig } from 'axios'
 
 export const AXIOS_INSTANCE = Axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL,
 })
+
+export const setAuthorization = (token: string) => {
+  AXIOS_INSTANCE.defaults.headers['Authorization'] = `Bearer ${token}`
+}
 
 export const customInstance = <T>(
   config: AxiosRequestConfig,

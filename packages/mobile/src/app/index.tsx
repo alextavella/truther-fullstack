@@ -1,5 +1,5 @@
-import SignIn from './(public)/sign-in'
+import { Redirect } from 'expo-router'
 
 export default function App() {
-  return <SignIn />
+  return <Redirect href="/coins" />
 }

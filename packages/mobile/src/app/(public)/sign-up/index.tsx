@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 
 export default function SignUp() {
-  const { goToBack } = useRedirect()
+  const { goToBack, goToCoins } = useRedirect()
 
   return (
     <View style={s.container}>
@@ -21,7 +21,7 @@ export default function SignUp() {
         <Text>
           We ask for your personal information to verify your identity
         </Text>
-        <SignUpForm style={s.form} />
+        <SignUpForm style={s.form} onSuccess={goToCoins} />
       </View>
       <View style={s.footer}>
         <Text>Already have an account?</Text>

@@ -1,5 +1,5 @@
 import { AppProvider } from '@/providers/AppProvider'
-import { SplashScreen } from 'expo-router'
+import { Slot, SplashScreen } from 'expo-router'
 import React, { useEffect } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import {
@@ -15,7 +15,6 @@ import {
 } from '@expo-google-fonts/dm-sans'
 
 import { Loading } from '@/components/loading'
-import { WhiteBoard } from '@/components/white-board'
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync()
@@ -46,7 +45,7 @@ export default function Layout() {
   return (
     <GestureHandlerRootView>
       <AppProvider>
-        <WhiteBoard />
+        <Slot />
       </AppProvider>
     </GestureHandlerRootView>
   )
