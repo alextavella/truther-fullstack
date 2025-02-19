@@ -40,6 +40,8 @@ paths:
                     type: string
                   uid:
                     type: number
+                  name:
+                    type: string
                   email:
                     type: string
                   role:
@@ -47,12 +49,12 @@ paths:
                     enum:
                       - customer
                       - admin
-                    nullable: true
+                    default: customer
                 required:
                   - access_token
                   - uid
+                  - name
                   - email
-                  - role
                 additionalProperties: false
   /coins/search:
     get:
@@ -200,23 +202,25 @@ paths:
               schema:
                 type: object
                 properties:
+                  access_token:
+                    type: string
+                  uid:
+                    type: number
                   name:
                     type: string
                   email:
-                    type: string
-                  password:
                     type: string
                   role:
                     type: string
                     enum:
                       - customer
                       - admin
-                    nullable: true
                     default: customer
                 required:
+                  - access_token
+                  - uid
                   - name
                   - email
-                  - password
                 additionalProperties: false
     put:
       operationId: updateUser
