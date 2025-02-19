@@ -1,3 +1,5 @@
+@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFsZXh0YXZlbGxhQGdtYWlsLmNvbSIsIm5hbWUiOiJBbGV4IFRhdmVsbGEiLCJyb2xlIjoiY3VzdG9tZXIiLCJzdWIiOjgyLCJpYXQiOjE3Mzk5MjQ5NTAsImV4cCI6MTczOTkyODU1MH0.HkZ4G7ugGdtkvF_thlb9bK1ZqtLZVnre75iN0q-EbIw
+
 ### Create user
 POST http://localhost:3333/users
 Content-Type: application/json
@@ -9,18 +11,10 @@ Content-Type: application/json
   "role": "customer"
 }
 
-### Get user (auth)
-POST http://localhost:3333/users/auth
-Content-Type: application/json
-
-{
-  "email": "alextavella@gmail.com",
-  "password": "12345678"
-}
-
 ### Update user
-PUT http://localhost:3333/users/2
+PUT http://localhost:3333/users
 Content-Type: application/json
+Authorization: Bearer {{access_token}}
 
 {
   "name": "Alex Tavella",
@@ -31,6 +25,8 @@ Content-Type: application/json
 
 ### List users (name)
 GET http://localhost:3333/users/?page=1&pageSize=10&name=ale
+Authorization: Bearer {{access_token}}
 
 ### List users (role
 GET http://localhost:3333/users/?page=1&pageSize=10&role=customer
+Authorization: Bearer {{access_token}}
