@@ -1,4 +1,5 @@
 import { Header } from '@/components/header'
+import { Search } from '@/components/search'
 import { useRedirect } from '@/hooks/useRedirect'
 import { useSession } from '@/providers/SessionProvider'
 import React from 'react'
@@ -9,11 +10,14 @@ export default function Coins() {
   const { goToHome } = useRedirect()
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <>
       <Header.Root>
         <Header.Heading>{user?.name}</Header.Heading>
       </Header.Root>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+
+      <View style={{ flex: 1, alignItems: 'center', top: -20 }}>
+        <Search style={{ width: '80%' }} />
+
         <TouchableOpacity
           onPress={() => {
             signOut()
@@ -23,6 +27,6 @@ export default function Coins() {
           <Text>Coins</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </>
   )
 }
