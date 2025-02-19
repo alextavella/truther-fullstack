@@ -8,9 +8,9 @@
 import type { CreateUser201Role } from './createUser201Role'
 
 export type CreateUser201 = {
+  access_token: string
+  uid: number
   name: string
   email: string
-  password: string
-  /** @nullable */
   role?: CreateUser201Role
 }

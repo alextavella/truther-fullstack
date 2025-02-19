@@ -10,7 +10,7 @@ import type { GetUser200Role } from './getUser200Role'
 export type GetUser200 = {
   access_token: string
   uid: number
+  name: string
   email: string
-  /** @nullable */
-  role: GetUser200Role
+  role?: GetUser200Role
 }
