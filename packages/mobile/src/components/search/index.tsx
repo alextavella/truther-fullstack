@@ -1,3 +1,4 @@
+import { useRedirect } from '@/hooks/useRedirect'
 import React from 'react'
 import {
   View,
@@ -10,12 +11,13 @@ import { Input } from '../input'
 type SearchProps = ViewProps
 
 export function Search({ style, ...rest }: SearchProps) {
-  const [searchText, setSearchText] = React.useState('')
+  const { goToSearchCoins } = useRedirect()
+  const [searchText, setSearchText] = React.useState('ethereum')
 
   const handleSearch = (
     e: NativeSyntheticEvent<TextInputEndEditingEventData>,
   ) => {
-    console.log('searching...', e.nativeEvent.text)
+    goToSearchCoins(e.nativeEvent.text)
   }
 
   return (
