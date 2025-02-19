@@ -101,7 +101,7 @@ export class UserRepository implements IUserRepository {
 
     if (filters.get('role')) filterSQL.push(eq(users.role, filters.get('role')))
 
-    const { id, password, ...rest } = getTableColumns(users)
+    const { password, ...rest } = getTableColumns(users)
 
     const qb = db
       .select({ ...rest })

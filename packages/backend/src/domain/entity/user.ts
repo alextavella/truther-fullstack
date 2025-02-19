@@ -10,7 +10,7 @@ export type UserKeys = keyof User
 export type UserRoles = 'customer' | 'admin'
 export type NewUser = Omit<User, 'id'>
 export type EditUser = Omit<User, 'id'>
-export type ListUser = Omit<User, 'id' | 'password'>
+export type ListUser = Omit<User, 'password'>
 export type GetUser = Pick<User, 'email' | 'password'>
 
 export type AuthUser = Pick<User, 'name' | 'email' | 'role'>
@@ -66,5 +66,14 @@ export class UserEntity {
       .pbkdf2Sync(password, this.secret, 10000, 64, 'sha512')
       .toString('hex')
     return hash === checkHash
+  }
+
+  static verifySessionToken(access_token: string) {
+    try {
+      jwt.verify(access_token, this.secret)
+      return true
+    } catch (error) {
+      return false
+    }
   }
 }

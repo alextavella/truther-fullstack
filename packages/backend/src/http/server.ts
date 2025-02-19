@@ -1,4 +1,5 @@
 import fastifyCors from '@fastify/cors'
+import fastifyJwt from '@fastify/jwt'
 import fastify from 'fastify'
 
 import {
@@ -19,6 +20,8 @@ const app = fastify({
 app.register(fastifyCors, { origin: '*' })
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
+app.register(fastifyJwt, { secret: env.AUTH_SECRET })
+
 //
 setupOpenApi(app)
 setupRegistry(app)
