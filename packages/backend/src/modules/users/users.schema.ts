@@ -1,3 +1,4 @@
+import { authSchema } from '@/domain/entity/auth'
 import { authMiddleware } from '@/http/middleware'
 import { userEntitySchema, userRoles } from '@/infra/db/schema'
 import {
@@ -8,7 +9,7 @@ import { z } from 'zod'
 
 // Create user schemas
 const createBodySchema = userEntitySchema.omit({ id: true })
-const createResultSchema = userEntitySchema.omit({ id: true })
+const createResultSchema = authSchema
 export const createUserSchema = {
   schema: {
     tags: ['Users'],

@@ -1,5 +1,6 @@
 import { registry } from '@/config/registry'
-import { UserEntity, type GetUser, type UserRoles } from '@/domain/entity/user'
+import type { Auth } from '@/domain/entity/auth'
+import { UserEntity, type GetUser } from '@/domain/entity/user'
 import type { UseCase } from '@/infra/interfaces/usecase'
 import {
   UserRepository,
@@ -8,12 +9,7 @@ import {
 import { BadRequest } from 'http-errors'
 
 type Input = GetUser
-type Output = {
-  access_token: string
-  uid: number
-  email: string
-  role: UserRoles | null
-}
+type Output = Auth
 
 export type IGetUserUseCase = UseCase<Input, Output>
 
@@ -26,17 +22,12 @@ export class GetUserUseCase implements IGetUserUseCase {
       throw new BadRequest('Password or email invalid')
     }
 
-    const auth = UserEntity.authUser(user, password)
-    if (!auth) {
+    const authUser = UserEntity.authUser(user, password)
+    if (!authUser) {
       throw new BadRequest('Password or email invalid')
     }
 
-    return {
-      access_token: auth.token,
-      uid: user.id,
-      email: user.email,
-      role: user.role,
-    }
+    return authUser.auth
   }
 
   static build() {
