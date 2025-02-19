@@ -6,12 +6,8 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * @nullable
- */
 export type CreateUser201Role =
-  | (typeof CreateUser201Role)[keyof typeof CreateUser201Role]
-  | null
+  (typeof CreateUser201Role)[keyof typeof CreateUser201Role]
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CreateUser201Role = {
