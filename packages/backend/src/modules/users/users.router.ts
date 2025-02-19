@@ -1,13 +1,11 @@
 import { registry } from '@/config/registry'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { CreateUserUseCase } from './usecases/create-user.usecase'
-import { GetUserUseCase } from './usecases/get-user.usecase'
 import { ListUserUseCase } from './usecases/list-users.usecase'
 import { UpdateUserUseCase } from './usecases/update-user.usecase'
 import { registerProviders } from './users.registry'
 import {
   createUserSchema,
-  getUserSchema,
   listUserSchema,
   updateUserSchema,
 } from './users.schema'
@@ -19,14 +17,10 @@ export const usersRouter: FastifyPluginAsyncZod = async app => {
       .getModule(CreateUserUseCase.name)
       .execute(request.body)
   })
-  app.post('/auth', getUserSchema, async request => {
-    return await registry.getModule(GetUserUseCase.name).execute(request.body)
-  })
-  app.put('/:id', updateUserSchema, async request => {
-    const { id } = request.params
+  app.put('/', updateUserSchema, async request => {
     return await registry
       .getModule(UpdateUserUseCase.name)
-      .execute({ id, ...request.body })
+      .execute({ id: request.user.sub, ...request.body })
   })
   app.get('/', listUserSchema, async request => {
     return await registry

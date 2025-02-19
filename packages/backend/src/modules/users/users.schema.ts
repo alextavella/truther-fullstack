@@ -1,3 +1,4 @@
+import { authMiddleware } from '@/http/middleware'
 import { userEntitySchema, userRoles } from '@/infra/db/schema'
 import {
   paginationQuerySchema,
@@ -22,16 +23,15 @@ export const createUserSchema = {
 }
 
 // Update user schemas
-const updateParamsSchema = z.object({ id: z.string() })
 const updateBodySchema = userEntitySchema.omit({ id: true })
 const updateResultSchema = userEntitySchema.omit({ id: true })
 export const updateUserSchema = {
+  onRequest: authMiddleware,
   schema: {
     tags: ['Users'],
     description: 'Update user',
     summary: 'Update user',
     operationId: 'updateUser',
-    params: updateParamsSchema,
     body: updateBodySchema,
     response: {
       200: updateResultSchema,
@@ -47,12 +47,13 @@ const listQuerySchema = paginationQuerySchema.merge(
     role: z.enum(userRoles).optional(),
   }),
 )
-const listUsersSchema = userEntitySchema.omit({ id: true, password: true })
+const listUsersSchema = userEntitySchema.omit({ password: true })
 const listResultSchema = z.object({
   items: listUsersSchema.array(),
   pagination: paginationResultSchema,
 })
 export const listUserSchema = {
+  onRequest: authMiddleware,
   schema: {
     tags: ['Users'],
     description: 'List users',
@@ -61,27 +62,6 @@ export const listUserSchema = {
     querystring: listQuerySchema,
     response: {
       200: listResultSchema,
-    },
-  },
-}
-
-// Get user schemas (auth)
-const getBodySchema = userEntitySchema.pick({ email: true, password: true })
-const getResultSchema = z.object({
-  access_token: z.string(),
-  uid: z.number(),
-  email: z.string(),
-  role: z.enum(userRoles).nullable(),
-})
-export const getUserSchema = {
-  schema: {
-    tags: ['Users'],
-    description: 'Get user',
-    summary: 'Get user',
-    operationId: 'getUser',
-    body: getBodySchema,
-    response: {
-      200: getResultSchema,
     },
   },
 }
