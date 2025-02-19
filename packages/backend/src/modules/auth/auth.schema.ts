@@ -1,14 +1,9 @@
-import { userEntitySchema, userRoles } from '@/infra/db/schema'
-import { z } from 'zod'
+import { authSchema } from '@/domain/entity/auth'
+import { userEntitySchema } from '@/infra/db/schema'
 
 // Get user schemas (auth)
 const getBodySchema = userEntitySchema.pick({ email: true, password: true })
-const getResultSchema = z.object({
-  access_token: z.string(),
-  uid: z.number(),
-  email: z.string(),
-  role: z.enum(userRoles).nullable(),
-})
+const getResultSchema = authSchema
 export const getUserSchema = {
   schema: {
     tags: ['Auth'],

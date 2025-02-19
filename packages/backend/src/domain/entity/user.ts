@@ -3,6 +3,7 @@ import type { userEntitySchema } from '@/infra/db/schema'
 import jwt from 'jsonwebtoken'
 import crypto from 'node:crypto'
 import { z } from 'zod'
+import type { Auth } from './auth'
 
 // Types
 export type User = z.infer<typeof userEntitySchema>
@@ -19,7 +20,7 @@ export type AuthToken = AuthUser & {
 }
 export type AuthResult = {
   user: User
-  token: string
+  auth: Auth
 }
 
 // Implementation
@@ -38,7 +39,7 @@ export class UserEntity {
 
   static authUser(user: User, password: string): AuthResult | null {
     if (!this.validPassword(password, user.password)) return null
-    const token = jwt.sign(
+    const access_token = jwt.sign(
       {
         email: user.email,
         name: user.name,
@@ -48,7 +49,16 @@ export class UserEntity {
       this.secret,
       { expiresIn: '1h' },
     )
-    return { user, token }
+    return {
+      user,
+      auth: {
+        access_token: access_token,
+        uid: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    }
   }
 
   private static generatePassword(password: string) {
