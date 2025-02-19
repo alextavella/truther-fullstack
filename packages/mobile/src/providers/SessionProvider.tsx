@@ -40,7 +40,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
   const user = React.useMemo(() => {
     if (!session) return null
     return JSON.parse(session) || null
-  }, [])
+  }, [session])
 
   return (
     <AuthContext.Provider
