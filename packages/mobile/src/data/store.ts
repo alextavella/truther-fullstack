@@ -43,6 +43,96 @@ type Awaited<O> = O extends AwaitedInput<infer T> ? T : never
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1]
 
 /**
+ * Get user
+ * @summary Get user
+ */
+export const getUser = (
+  getUserBody: BodyType<GetUserBody>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
+) => {
+  return customInstance<GetUser200>(
+    {
+      url: `/auth`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: getUserBody,
+      signal,
+    },
+    options,
+  )
+}
+
+export const getGetUserMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof getUser>>,
+    TError,
+    { data: BodyType<GetUserBody> },
+    TContext
+  >
+  request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof getUser>>,
+  TError,
+  { data: BodyType<GetUserBody> },
+  TContext
+> => {
+  const mutationKey = ['getUser']
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof getUser>>,
+    { data: BodyType<GetUserBody> }
+  > = props => {
+    const { data } = props ?? {}
+
+    return getUser(data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type GetUserMutationResult = NonNullable<
+  Awaited<ReturnType<typeof getUser>>
+>
+export type GetUserMutationBody = BodyType<GetUserBody>
+export type GetUserMutationError = ErrorType<unknown>
+
+/**
+ * @summary Get user
+ */
+export const useGetUser = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof getUser>>,
+    TError,
+    { data: BodyType<GetUserBody> },
+    TContext
+  >
+  request?: SecondParameter<typeof customInstance>
+}): UseMutationResult<
+  Awaited<ReturnType<typeof getUser>>,
+  TError,
+  { data: BodyType<GetUserBody> },
+  TContext
+> => {
+  const mutationOptions = getGetUserMutationOptions(options)
+
+  return useMutation(mutationOptions)
+}
+
+/**
  * Search coins
  * @summary Search coins
  */
@@ -424,6 +514,94 @@ export const useCreateUser = <
 }
 
 /**
+ * Update user
+ * @summary Update user
+ */
+export const updateUser = (
+  updateUserBody: BodyType<UpdateUserBody>,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<UpdateUser200>(
+    {
+      url: `/users`,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      data: updateUserBody,
+    },
+    options,
+  )
+}
+
+export const getUpdateUserMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updateUser>>,
+    TError,
+    { data: BodyType<UpdateUserBody> },
+    TContext
+  >
+  request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof updateUser>>,
+  TError,
+  { data: BodyType<UpdateUserBody> },
+  TContext
+> => {
+  const mutationKey = ['updateUser']
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof updateUser>>,
+    { data: BodyType<UpdateUserBody> }
+  > = props => {
+    const { data } = props ?? {}
+
+    return updateUser(data, requestOptions)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type UpdateUserMutationResult = NonNullable<
+  Awaited<ReturnType<typeof updateUser>>
+>
+export type UpdateUserMutationBody = BodyType<UpdateUserBody>
+export type UpdateUserMutationError = ErrorType<unknown>
+
+/**
+ * @summary Update user
+ */
+export const useUpdateUser = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updateUser>>,
+    TError,
+    { data: BodyType<UpdateUserBody> },
+    TContext
+  >
+  request?: SecondParameter<typeof customInstance>
+}): UseMutationResult<
+  Awaited<ReturnType<typeof updateUser>>,
+  TError,
+  { data: BodyType<UpdateUserBody> },
+  TContext
+> => {
+  const mutationOptions = getUpdateUserMutationOptions(options)
+
+  return useMutation(mutationOptions)
+}
+
+/**
  * List users
  * @summary List users
  */
@@ -559,183 +737,4 @@ export function useListUsers<
   query.queryKey = queryOptions.queryKey
 
   return query
-}
-
-/**
- * Get user
- * @summary Get user
- */
-export const getUser = (
-  getUserBody: BodyType<GetUserBody>,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal,
-) => {
-  return customInstance<GetUser200>(
-    {
-      url: `/users/auth`,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      data: getUserBody,
-      signal,
-    },
-    options,
-  )
-}
-
-export const getGetUserMutationOptions = <
-  TError = ErrorType<unknown>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof getUser>>,
-    TError,
-    { data: BodyType<GetUserBody> },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof getUser>>,
-  TError,
-  { data: BodyType<GetUserBody> },
-  TContext
-> => {
-  const mutationKey = ['getUser']
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      'mutationKey' in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined }
-
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof getUser>>,
-    { data: BodyType<GetUserBody> }
-  > = props => {
-    const { data } = props ?? {}
-
-    return getUser(data, requestOptions)
-  }
-
-  return { mutationFn, ...mutationOptions }
-}
-
-export type GetUserMutationResult = NonNullable<
-  Awaited<ReturnType<typeof getUser>>
->
-export type GetUserMutationBody = BodyType<GetUserBody>
-export type GetUserMutationError = ErrorType<unknown>
-
-/**
- * @summary Get user
- */
-export const useGetUser = <
-  TError = ErrorType<unknown>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof getUser>>,
-    TError,
-    { data: BodyType<GetUserBody> },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationResult<
-  Awaited<ReturnType<typeof getUser>>,
-  TError,
-  { data: BodyType<GetUserBody> },
-  TContext
-> => {
-  const mutationOptions = getGetUserMutationOptions(options)
-
-  return useMutation(mutationOptions)
-}
-
-/**
- * Update user
- * @summary Update user
- */
-export const updateUser = (
-  id: string,
-  updateUserBody: BodyType<UpdateUserBody>,
-  options?: SecondParameter<typeof customInstance>,
-) => {
-  return customInstance<UpdateUser200>(
-    {
-      url: `/users/${id}`,
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      data: updateUserBody,
-    },
-    options,
-  )
-}
-
-export const getUpdateUserMutationOptions = <
-  TError = ErrorType<unknown>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof updateUser>>,
-    TError,
-    { id: string; data: BodyType<UpdateUserBody> },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof updateUser>>,
-  TError,
-  { id: string; data: BodyType<UpdateUserBody> },
-  TContext
-> => {
-  const mutationKey = ['updateUser']
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      'mutationKey' in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined }
-
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof updateUser>>,
-    { id: string; data: BodyType<UpdateUserBody> }
-  > = props => {
-    const { id, data } = props ?? {}
-
-    return updateUser(id, data, requestOptions)
-  }
-
-  return { mutationFn, ...mutationOptions }
-}
-
-export type UpdateUserMutationResult = NonNullable<
-  Awaited<ReturnType<typeof updateUser>>
->
-export type UpdateUserMutationBody = BodyType<UpdateUserBody>
-export type UpdateUserMutationError = ErrorType<unknown>
-
-/**
- * @summary Update user
- */
-export const useUpdateUser = <
-  TError = ErrorType<unknown>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof updateUser>>,
-    TError,
-    { id: string; data: BodyType<UpdateUserBody> },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationResult<
-  Awaited<ReturnType<typeof updateUser>>,
-  TError,
-  { id: string; data: BodyType<UpdateUserBody> },
-  TContext
-> => {
-  const mutationOptions = getUpdateUserMutationOptions(options)
-
-  return useMutation(mutationOptions)
 }
