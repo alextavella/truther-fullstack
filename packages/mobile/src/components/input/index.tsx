@@ -13,12 +13,14 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated'
+import { Icon, type IconName } from '../icon'
 import { s } from './styles'
 
 type InputFocusEvent = NativeSyntheticEvent<TextInputFocusEventData>
 
 export type InputProps = TextInputProps &
   Partial<{
+    icon: IconName
     error: boolean
     helperText: string
   }>
@@ -29,6 +31,7 @@ export function Input({
   value,
   onBlur,
   onFocus,
+  icon,
   error,
   helperText,
   ...rest
@@ -74,26 +77,38 @@ export function Input({
   }
 
   return (
-    <View style={s.container}>
-      {/* Label animado */}
-      <Animated.Text style={[s.label, labelStyle]}>{placeholder}</Animated.Text>
+    <View style={s.root}>
+      <View style={s.container}>
+        {icon && (
+          <View style={s.icon}>
+            <Icon name={icon} size={18} color={colors.gray[500]} />
+          </View>
+        )}
 
-      {/* Input */}
-      <TextInput
-        style={[
-          s.input,
-          style,
-          isFocused.get() && s.inputFocused,
-          error && s.inputError,
-        ]}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        value={value}
-        {...rest}
-      />
+        <View style={s.content}>
+          {/* Label animado */}
+          <Animated.Text style={[s.label, labelStyle]}>
+            {placeholder}
+          </Animated.Text>
+
+          {/* Input */}
+          <TextInput
+            style={[
+              s.input,
+              style,
+              isFocused.get() && s.inputFocused,
+              error && s.inputError,
+            ]}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            value={value}
+            {...rest}
+          />
+        </View>
+      </View>
 
       {/* Error */}
-      <Animated.View style={errorStyle}>
+      <Animated.View style={[s.footer, errorStyle]}>
         <Text style={s.error}>{helperText}</Text>
       </Animated.View>
     </View>
