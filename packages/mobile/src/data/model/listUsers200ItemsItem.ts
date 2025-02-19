@@ -8,6 +8,7 @@
 import type { ListUsers200ItemsItemRole } from './listUsers200ItemsItemRole'
 
 export type ListUsers200ItemsItem = {
+  id: number
   name: string
   email: string
   /** @nullable */
