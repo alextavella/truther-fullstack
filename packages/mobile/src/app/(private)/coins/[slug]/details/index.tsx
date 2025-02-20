@@ -8,7 +8,8 @@ import { colors } from '@/styles/colors'
 import { fontFamily } from '@/styles/font-family'
 import { useLocalSearchParams } from 'expo-router'
 import React from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
+import { FlatList } from 'react-native-gesture-handler'
 
 type ParamsProps = {
   slug: string

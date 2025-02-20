@@ -33,7 +33,14 @@ function HeaderRoot({ style, children, ...rest }: ViewProps) {
 }
 
 function HeaderHeading({ style, ...rest }: TextProps) {
-  return <Text style={[s.heading, style]} {...rest} />
+  return (
+    <Text
+      style={[s.heading, style]}
+      numberOfLines={2}
+      ellipsizeMode="tail"
+      {...rest}
+    />
+  )
 }
 
 export const Header = {

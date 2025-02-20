@@ -15,6 +15,7 @@ import {
 } from '@expo-google-fonts/dm-sans'
 
 import { Loading } from '@/components/loading'
+import { StatusBar } from 'react-native'
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync()
@@ -44,6 +45,7 @@ export default function Layout() {
 
   return (
     <GestureHandlerRootView>
+      <StatusBar translucent />
       <AppProvider>
         <Slot />
       </AppProvider>

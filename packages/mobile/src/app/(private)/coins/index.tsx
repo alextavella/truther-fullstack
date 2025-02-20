@@ -7,7 +7,8 @@ import { useSession } from '@/providers/SessionProvider'
 import { NumberUtils } from '@/services/utils/number'
 import { colors } from '@/styles/colors'
 import React from 'react'
-import { FlatList, RefreshControl, View } from 'react-native'
+import { View } from 'react-native'
+import { FlatList } from 'react-native-gesture-handler'
 
 export default function Coins() {
   const { user } = useSession()
@@ -17,18 +18,16 @@ export default function Coins() {
   return (
     <>
       <Header.Root>
-        <Header.Heading>{user?.name}</Header.Heading>
+        <Header.Heading>Welcome, {user?.name}</Header.Heading>
       </Header.Root>
 
       <View style={{ flex: 1, alignItems: 'center', top: -20 }}>
         <Search style={{ width: '80%' }} />
+
         <FlatList
           style={{ width: '100%' }}
           data={favoriteCoins}
           keyExtractor={item => item.id}
-          refreshControl={
-            <RefreshControl refreshing={false} onRefresh={() => {}} />
-          }
           renderItem={({ item, index }) => (
             <ListCoin.Root
               onPress={() => goToDetailsCoins(item.id)}
