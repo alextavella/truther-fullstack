@@ -28,7 +28,12 @@ function ListCoinIcon({ src = COIN_IMAGE_FALLBACK }: ListCoinIconProps) {
 
 function ListCoinText({ style, children, ...rest }: TextProps) {
   return (
-    <Text style={[s.text, style]} {...rest}>
+    <Text
+      numberOfLines={1}
+      ellipsizeMode="tail"
+      style={[s.text, style]}
+      {...rest}
+    >
       {children}
     </Text>
   )

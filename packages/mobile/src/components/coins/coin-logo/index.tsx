@@ -11,7 +11,7 @@ export function CoinLogo({ name, image = COIN_IMAGE_FALLBACK }: CoinLogoProps) {
   return (
     <View style={s.container}>
       <Image source={{ uri: image }} style={s.icon} />
-      <Text style={s.name} numberOfLines={2} ellipsizeMode="middle">
+      <Text style={s.name} numberOfLines={2} ellipsizeMode="tail">
         {name}
       </Text>
     </View>

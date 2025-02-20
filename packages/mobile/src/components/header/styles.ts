@@ -15,5 +15,7 @@ export const s = StyleSheet.create({
     fontFamily: fontFamily.bold,
     fontSize: 36,
     fontWeight: 'bold',
+    paddingHorizontal: 16,
+    textAlign: 'center',
   },
 })
