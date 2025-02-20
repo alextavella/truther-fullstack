@@ -1,5 +1,6 @@
+import { Text } from '@/components/text'
 import { COIN_IMAGE_FALLBACK } from '@/config/coin'
-import { Image, Text, View } from 'react-native'
+import { Image, View } from 'react-native'
 import { s } from './styles'
 
 export type CoinLogoProps = {

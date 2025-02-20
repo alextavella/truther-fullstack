@@ -1,7 +1,7 @@
+import { Text } from '@/components/text'
 import { COIN_IMAGE_FALLBACK } from '@/config/coin'
 import {
   Image,
-  Text,
   TouchableOpacity,
   type TextProps,
   type TouchableOpacityProps,

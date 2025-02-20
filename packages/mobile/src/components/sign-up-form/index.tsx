@@ -29,8 +29,8 @@ export function SignUpForm({ onSuccess, style, ...rest }: SignUpFormProps) {
   } = useForm<Inputs>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
-      name: 'Alex Tavella',
-      email: 'alextavella@outlook.com',
+      name: '',
+      email: '',
       password: '',
     },
   })
