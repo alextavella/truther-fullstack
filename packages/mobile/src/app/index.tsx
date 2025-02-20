@@ -1,14 +1,5 @@
-import { Text } from '@/components/text'
-import { View } from 'react-native'
-
-// export default function App() {
-//   return <Redirect href="/coins" />
-// }
+import { Redirect } from 'expo-router'
 
 export default function App() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Ola Mundo!</Text>
-    </View>
-  )
+  return <Redirect href="/coins" />
 }
