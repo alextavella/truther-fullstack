@@ -3,12 +3,15 @@ import { COIN_IMAGE_FALLBACK } from '@/config/coin'
 import { Image, View } from 'react-native'
 import { s } from './styles'
 
-export type CoinLogoProps = {
+export type BrandCoinProps = {
   name: string
   image?: string
 }
 
-export function CoinLogo({ name, image = COIN_IMAGE_FALLBACK }: CoinLogoProps) {
+export function BrandCoin({
+  name,
+  image = COIN_IMAGE_FALLBACK,
+}: BrandCoinProps) {
   return (
     <View style={s.container}>
       <Image source={{ uri: image }} style={s.icon} />
