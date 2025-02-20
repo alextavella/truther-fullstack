@@ -7,7 +7,7 @@ export function useFavoriteCoins(coinId?: string) {
   const [[_, favoritesCoins], setFavoriteCoins] =
     useStorageState('favorite-coins')
 
-  const data = React.useMemo(() => {
+  const data = React.useMemo<GetCoinMarket200[]>(() => {
     if (!favoritesCoins) return []
     const source = JSON.parse(favoritesCoins)
     return Array.isArray(source) ? source : []
@@ -33,5 +33,9 @@ export function useFavoriteCoins(coinId?: string) {
 
   const setAsFavorite = isFavorite ? removeAsFavorite : addAsFavorite
 
-  return [[data, setAsFavorite], { isFavorite }] as const
+  return {
+    data,
+    setAsFavorite,
+    isFavorite,
+  } as const
 }

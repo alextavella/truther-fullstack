@@ -5,8 +5,8 @@ export const s = StyleSheet.create({
   root: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    gap: 10,
+    justifyContent: 'space-between',
+    gap: 16,
     paddingVertical: 22,
     paddingHorizontal: 24,
   },
@@ -16,9 +16,11 @@ export const s = StyleSheet.create({
   },
   text: {
     color: colors.gray[600],
+    flex: 1,
     fontFamily: fontFamily.bold,
     fontSize: 16,
     fontWeight: 'bold',
+    textAlign: 'left',
   },
   price: {
     color: colors.blue.base,
