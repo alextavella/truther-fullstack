@@ -2,7 +2,8 @@ import { CoinLogo } from '@/components/coins/coin-logo'
 import { Header } from '@/components/header'
 import { IconBackButton, IconButton } from '@/components/icon-button'
 import { useCoinMarket } from '@/hooks/useCoinMarket'
-import { CoinMarketService } from '@/services/coins/coin-market'
+import { useFavoriteCoins } from '@/hooks/useFavoriteCoins'
+import { CoinMarketService } from '@/services/coins'
 import { colors } from '@/styles/colors'
 import { fontFamily } from '@/styles/font-family'
 import { useLocalSearchParams } from 'expo-router'
@@ -14,8 +15,9 @@ type ParamsProps = {
 }
 
 export default function SearchCoins() {
-  const { slug } = useLocalSearchParams<ParamsProps>()
-  const [coinMarket] = useCoinMarket(slug)
+  const { slug: coinId } = useLocalSearchParams<ParamsProps>()
+  const [coinMarket] = useCoinMarket(coinId)
+  const [[_, setFavoriteCoin], { isFavorite }] = useFavoriteCoins(coinId)
 
   return (
     <View style={s.container}>
@@ -27,7 +29,11 @@ export default function SearchCoins() {
               <CoinLogo name={coinMarket.name} image={coinMarket.image} />
             )}
           </Header.Heading>
-          <IconButton name="heart" />
+          <IconButton
+            name="heart"
+            color={isFavorite ? colors.red.dark : colors.gray[100]}
+            onPress={() => coinMarket && setFavoriteCoin(coinMarket)}
+          />
         </View>
       </Header.Root>
 

@@ -15,5 +15,6 @@ export const colors = {
   },
   red: {
     base: '#DC143C',
+    dark: '#AA0000',
   },
 }
