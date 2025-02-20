@@ -9,9 +9,9 @@ export function useError() {
 
   return {
     handleError: (error: Error) => {
-      if (process.env.NODE_ENV === 'development') {
-        console.error('[FAIL]', error)
-      }
+      // if (process.env.NODE_ENV === 'development') {
+      //   console.error('[FAIL]', error)
+      // }
       if (error instanceof AxiosError) {
         if (error.status?.toString().startsWith('4')) {
           signOut()

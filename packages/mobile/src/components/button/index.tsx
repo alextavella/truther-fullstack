@@ -1,6 +1,6 @@
+import { Text } from '@/components/text'
 import {
   ActivityIndicator,
-  Text,
   TextProps,
   TouchableOpacity,
   TouchableOpacityProps,

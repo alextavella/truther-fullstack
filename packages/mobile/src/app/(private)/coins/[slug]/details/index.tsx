@@ -1,6 +1,7 @@
 import { CoinLogo } from '@/components/coins/coin-logo'
 import { Header } from '@/components/header'
 import { IconBackButton, IconButton } from '@/components/icon-button'
+import { Text } from '@/components/text'
 import { useCoinMarket } from '@/hooks/useCoinMarket'
 import { useFavoriteCoins } from '@/hooks/useFavoriteCoins'
 import { CoinMarketService } from '@/services/coins'
@@ -8,7 +9,7 @@ import { colors } from '@/styles/colors'
 import { fontFamily } from '@/styles/font-family'
 import { useLocalSearchParams } from 'expo-router'
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 
 type ParamsProps = {
