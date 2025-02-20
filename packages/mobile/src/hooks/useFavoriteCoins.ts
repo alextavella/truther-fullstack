@@ -1,17 +1,11 @@
+import { favoriteCoinsAtom } from '@/data/atoms/coin'
 import type { GetCoinMarket200 } from '@/data/model'
 import { CoinMarketService } from '@/services/coins'
+import { useAtom } from 'jotai/react'
 import React from 'react'
-import { useStorageState } from './useStorageState'
 
 export function useFavoriteCoins(coinId?: string) {
-  const [[_, favoritesCoins], setFavoriteCoins] =
-    useStorageState('favorite-coins')
-
-  const data = React.useMemo<GetCoinMarket200[]>(() => {
-    if (!favoritesCoins) return []
-    const source = JSON.parse(favoritesCoins)
-    return Array.isArray(source) ? source : []
-  }, [favoritesCoins])
+  const [data, setFavoriteCoins] = useAtom(favoriteCoinsAtom)
 
   const service = React.useMemo(
     () => CoinMarketService.formatFavoritesCoin(data),
@@ -24,11 +18,11 @@ export function useFavoriteCoins(coinId?: string) {
   )
 
   function addAsFavorite(coin: GetCoinMarket200) {
-    setFavoriteCoins(JSON.stringify(service.add(coin)))
+    setFavoriteCoins(service.add(coin))
   }
 
   function removeAsFavorite(coin: GetCoinMarket200) {
-    setFavoriteCoins(JSON.stringify(service.remove(coin)))
+    setFavoriteCoins(service.remove(coin))
   }
 
   const setAsFavorite = isFavorite ? removeAsFavorite : addAsFavorite
