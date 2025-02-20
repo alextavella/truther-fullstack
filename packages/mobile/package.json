@@ -2,12 +2,14 @@
   "name": "mobile",
   "version": "1.0.0",
   "main": "expo-router/entry",
+  "private": true,
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "generate": "orval --config ./orval.config.js"
+    "generate": "orval --config ./orval.config.js",
+    "test": "jest --watchAll"
   },
   "dependencies": {
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
@@ -40,8 +42,17 @@
     "@babel/core": "^7.26.9",
     "@babel/preset-env": "^7.26.9",
     "@babel/preset-react": "^7.26.3",
+    "@testing-library/react-native": "^13.0.1",
     "@types/react": "~18.3.18",
-    "babel-preset-expo": "^12.0.9"
+    "@types/jest": "^29.5.14",
+    "babel-preset-expo": "^12.0.9",
+    "jest": "~29.7.0",
+    "jest-expo": "~52.0.4"
   },
-  "private": true
+  "jest": {
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(?:.pnpm/)?((jest-)?react-native|@react-native(-community)?|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg))"
+    ]
+  }
 }
