@@ -1,13 +1,14 @@
-import { CoinLogo } from '@/components/coins/coin-logo'
+import { BrandCoin } from '@/components/coins/brand'
 import { Header } from '@/components/header'
 import { IconBackButton, IconButton } from '@/components/icon-button'
+import { Loading } from '@/components/loading'
 import { Text } from '@/components/text'
-import { useCoinMarket } from '@/hooks/useCoinMarket'
 import { useFavoriteCoins } from '@/hooks/useFavoriteCoins'
+import { useGetCoinMarket } from '@/hooks/useGetCoinMarket'
 import { CoinMarketService } from '@/services/coins'
 import { colors } from '@/styles/colors'
 import { fontFamily } from '@/styles/font-family'
-import { useLocalSearchParams } from 'expo-router'
+import { Redirect, useLocalSearchParams } from 'expo-router'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
@@ -18,8 +19,11 @@ type ParamsProps = {
 
 export default function SearchCoins() {
   const { slug: coinId } = useLocalSearchParams<ParamsProps>()
-  const [coinMarket] = useCoinMarket(coinId)
   const { setAsFavorite, isFavorite } = useFavoriteCoins(coinId)
+  const { data: coinMarket, isLoading, isError } = useGetCoinMarket(coinId)
+
+  if (isLoading) return <Loading />
+  if (isError) return <Redirect href="/" />
 
   return (
     <View style={s.container}>
@@ -28,7 +32,7 @@ export default function SearchCoins() {
           <IconBackButton color={colors.gray[100]} />
           <Header.Heading style={s.heading}>
             {coinMarket && (
-              <CoinLogo name={coinMarket.name} image={coinMarket.image} />
+              <BrandCoin name={coinMarket.name} image={coinMarket.image} />
             )}
           </Header.Heading>
           <IconButton
