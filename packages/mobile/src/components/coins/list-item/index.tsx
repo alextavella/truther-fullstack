@@ -1,3 +1,4 @@
+import { COIN_IMAGE_FALLBACK } from '@/config/coin'
 import {
   Image,
   Text,
@@ -16,7 +17,11 @@ function ListCoinRoot({ style, ...rest }: TouchableOpacityProps) {
   return <TouchableOpacity style={[s.root, style]} {...rest} />
 }
 
-function ListCoinIcon({ src }: { src?: string | null }) {
+export type ListCoinIconProps = {
+  src?: string | null
+}
+
+function ListCoinIcon({ src = COIN_IMAGE_FALLBACK }: ListCoinIconProps) {
   if (!src) return null
   return <Image style={s.icon} source={{ uri: src }} />
 }

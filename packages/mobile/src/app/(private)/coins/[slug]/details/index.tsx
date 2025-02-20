@@ -17,7 +17,7 @@ type ParamsProps = {
 export default function SearchCoins() {
   const { slug: coinId } = useLocalSearchParams<ParamsProps>()
   const [coinMarket] = useCoinMarket(coinId)
-  const [[_, setFavoriteCoin], { isFavorite }] = useFavoriteCoins(coinId)
+  const { setAsFavorite, isFavorite } = useFavoriteCoins(coinId)
 
   return (
     <View style={s.container}>
@@ -32,7 +32,7 @@ export default function SearchCoins() {
           <IconButton
             name="heart"
             color={isFavorite ? colors.red.dark : colors.gray[100]}
-            onPress={() => coinMarket && setFavoriteCoin(coinMarket)}
+            onPress={() => coinMarket && setAsFavorite(coinMarket)}
           />
         </View>
       </Header.Root>
