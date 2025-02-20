@@ -1,6 +1,7 @@
 import { useSession } from '@/providers/SessionProvider'
 import { AxiosError } from 'axios'
 import { useRouter } from 'expo-router'
+import { Alert } from 'react-native'
 
 export function useError() {
   const router = useRouter()
@@ -14,9 +15,10 @@ export function useError() {
       if (error instanceof AxiosError) {
         if (error.status?.toString().startsWith('4')) {
           signOut()
-          router.dismissAll()
+          return router.dismissAll()
         }
       }
+      Alert.alert('Error', error.message)
     },
   }
 }
