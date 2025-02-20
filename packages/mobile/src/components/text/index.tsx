@@ -5,11 +5,17 @@ import { Text as BaseText, TextProps } from 'react-native'
 export function Text({ style, ...rest }: TextProps) {
   return (
     <BaseText
+      {...rest}
       style={[
-        { fontFamily: fontFamily.regular, color: colors.gray[400] },
+        {
+          color: colors.gray[600],
+          fontFamily: fontFamily.regular,
+          fontSize: 16,
+          fontWeight: 'regular',
+          textAlign: 'left',
+        },
         style,
       ]}
-      {...rest}
     />
   )
 }

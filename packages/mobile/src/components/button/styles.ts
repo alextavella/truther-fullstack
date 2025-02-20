@@ -7,16 +7,17 @@ export const s = StyleSheet.create({
     borderRadius: 16,
     paddingVertical: 16,
     paddingHorizontal: 16,
-    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
     gap: 14,
+    width: 'auto',
   },
-  title: {
+  text: {
     color: colors.gray[100],
     fontFamily: fontFamily.bold,
     fontSize: 16,
     fontWeight: 'bold',
+    width: 'auto',
   },
 })
