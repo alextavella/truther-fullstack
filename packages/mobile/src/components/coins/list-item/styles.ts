@@ -18,10 +18,12 @@ export const s = StyleSheet.create({
     color: colors.gray[600],
     fontFamily: fontFamily.bold,
     fontSize: 16,
+    fontWeight: 'bold',
   },
   price: {
     color: colors.blue.base,
     fontFamily: fontFamily.regular,
     fontSize: 15,
+    fontWeight: 'normal',
   },
 })

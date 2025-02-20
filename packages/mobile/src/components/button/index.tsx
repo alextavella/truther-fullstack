@@ -7,10 +7,10 @@ import {
 } from 'react-native'
 
 import { colors } from '@/styles/colors'
-import { Icon, type IconProps } from '../icon'
+import { Icon, type IconName } from '../icon'
 import { s } from './styles'
 
-type ButtonRootProps = TouchableOpacityProps & {
+export type ButtonRootProps = TouchableOpacityProps & {
   isLoading?: boolean
 }
 
@@ -36,13 +36,16 @@ function ButtonRoot({
   )
 }
 
-type ButtonTextProps = TextProps
+export type ButtonTextProps = TextProps
 
 function ButtonText({ style, ...rest }: ButtonTextProps) {
   return <Text {...rest} style={[s.title, style]} />
 }
 
-type ButtonIconProps = Pick<IconProps, 'name' | 'color'>
+export type ButtonIconProps = {
+  name: IconName
+  color?: string
+}
 
 function ButtonIcon({ name, color = colors.gray[100] }: ButtonIconProps) {
   return <Icon name={name} color={color} size={24} />

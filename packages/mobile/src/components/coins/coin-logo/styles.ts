@@ -1,19 +1,23 @@
-import { colors } from '@/styles/colors'
-import { fontFamily } from '@/styles/font-family'
+import { colors, fontFamily } from '@/styles/theme'
 import { StyleSheet } from 'react-native'
 
 export const s = StyleSheet.create({
-  root: {
+  container: {
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 40,
-    height: 235,
+    gap: 6,
     width: '100%',
   },
-  heading: {
+  icon: {
+    height: 76,
+    width: 76,
+  },
+  name: {
     color: colors.gray[100],
     fontFamily: fontFamily.bold,
-    fontSize: 36,
+    fontSize: 24,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
 })
