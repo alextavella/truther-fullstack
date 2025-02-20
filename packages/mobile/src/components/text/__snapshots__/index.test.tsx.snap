@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Text /> snapshot 1`] = `
+<Text
+  style={
+    [
+      {
+        "color": "#1A1F24",
+        "fontFamily": "DMSans_400Regular",
+        "fontSize": 16,
+        "fontWeight": "regular",
+        "textAlign": "left",
+      },
+      undefined,
+    ]
+  }
+>
+  Some text
+</Text>
+`;
