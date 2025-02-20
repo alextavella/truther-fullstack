@@ -1,4 +1,5 @@
-import { Text, type TextProps } from 'react-native'
+import { Text } from '@/components/text'
+import { type TextProps } from 'react-native'
 import { s } from './styles'
 
 export type HeadingProps = TextProps

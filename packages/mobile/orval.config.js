@@ -5,7 +5,6 @@ module.exports = {
       target: './src/data/store.ts',
       schemas: './src/data/model',
       httpClient: 'axios',
-      client: 'react-query',
       mock: false,
       prettier: true,
       override: {

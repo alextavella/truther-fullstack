@@ -1,6 +1,6 @@
+import { Text } from '@/components/text'
 import {
   ActivityIndicator,
-  Text,
   TextProps,
   TouchableOpacity,
   TouchableOpacityProps,
@@ -39,7 +39,7 @@ function ButtonRoot({
 export type ButtonTextProps = TextProps
 
 function ButtonText({ style, ...rest }: ButtonTextProps) {
-  return <Text {...rest} style={[s.title, style]} />
+  return <Text {...rest} style={[s.text, style]} />
 }
 
 export type ButtonIconProps = {

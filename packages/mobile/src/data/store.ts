@@ -5,20 +5,6 @@
  * Truther API Documentation
  * OpenAPI spec version: 1.0.0
  */
-import { useMutation, useQuery } from '@tanstack/react-query'
-import type {
-  DataTag,
-  DefinedInitialDataOptions,
-  DefinedUseQueryResult,
-  MutationFunction,
-  QueryFunction,
-  QueryKey,
-  UndefinedInitialDataOptions,
-  UseMutationOptions,
-  UseMutationResult,
-  UseQueryOptions,
-  UseQueryResult,
-} from '@tanstack/react-query'
 import type {
   CreateUser201,
   CreateUserBody,
@@ -34,11 +20,7 @@ import type {
   UpdateUserBody,
 } from './model'
 import { customInstance } from '../lib/api'
-import type { ErrorType, BodyType } from '../lib/api'
-
-type AwaitedInput<T> = PromiseLike<T> | T
-
-type Awaited<O> = O extends AwaitedInput<infer T> ? T : never
+import type { BodyType } from '../lib/api'
 
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1]
 
@@ -49,7 +31,6 @@ type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1]
 export const getUser = (
   getUserBody: BodyType<GetUserBody>,
   options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal,
 ) => {
   return customInstance<GetUser200>(
     {
@@ -57,79 +38,9 @@ export const getUser = (
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       data: getUserBody,
-      signal,
     },
     options,
   )
-}
-
-export const getGetUserMutationOptions = <
-  TError = ErrorType<unknown>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof getUser>>,
-    TError,
-    { data: BodyType<GetUserBody> },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof getUser>>,
-  TError,
-  { data: BodyType<GetUserBody> },
-  TContext
-> => {
-  const mutationKey = ['getUser']
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      'mutationKey' in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined }
-
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof getUser>>,
-    { data: BodyType<GetUserBody> }
-  > = props => {
-    const { data } = props ?? {}
-
-    return getUser(data, requestOptions)
-  }
-
-  return { mutationFn, ...mutationOptions }
-}
-
-export type GetUserMutationResult = NonNullable<
-  Awaited<ReturnType<typeof getUser>>
->
-export type GetUserMutationBody = BodyType<GetUserBody>
-export type GetUserMutationError = ErrorType<unknown>
-
-/**
- * @summary Get user
- */
-export const useGetUser = <
-  TError = ErrorType<unknown>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof getUser>>,
-    TError,
-    { data: BodyType<GetUserBody> },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationResult<
-  Awaited<ReturnType<typeof getUser>>,
-  TError,
-  { data: BodyType<GetUserBody> },
-  TContext
-> => {
-  const mutationOptions = getGetUserMutationOptions(options)
-
-  return useMutation(mutationOptions)
 }
 
 /**
@@ -139,135 +50,11 @@ export const useGetUser = <
 export const searchCoins = (
   params: SearchCoinsParams,
   options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal,
 ) => {
   return customInstance<SearchCoins200>(
-    { url: `/coins/search`, method: 'GET', params, signal },
+    { url: `/coins/search`, method: 'GET', params },
     options,
   )
-}
-
-export const getSearchCoinsQueryKey = (params: SearchCoinsParams) => {
-  return [`/coins/search`, ...(params ? [params] : [])] as const
-}
-
-export const getSearchCoinsQueryOptions = <
-  TData = Awaited<ReturnType<typeof searchCoins>>,
-  TError = ErrorType<unknown>,
->(
-  params: SearchCoinsParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof searchCoins>>, TError, TData>
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {}
-
-  const queryKey = queryOptions?.queryKey ?? getSearchCoinsQueryKey(params)
-
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof searchCoins>>> = ({
-    signal,
-  }) => searchCoins(params, requestOptions, signal)
-
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof searchCoins>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type SearchCoinsQueryResult = NonNullable<
-  Awaited<ReturnType<typeof searchCoins>>
->
-export type SearchCoinsQueryError = ErrorType<unknown>
-
-export function useSearchCoins<
-  TData = Awaited<ReturnType<typeof searchCoins>>,
-  TError = ErrorType<unknown>,
->(
-  params: SearchCoinsParams,
-  options: {
-    query: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof searchCoins>>, TError, TData>
-    > &
-      Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof searchCoins>>,
-          TError,
-          Awaited<ReturnType<typeof searchCoins>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useSearchCoins<
-  TData = Awaited<ReturnType<typeof searchCoins>>,
-  TError = ErrorType<unknown>,
->(
-  params: SearchCoinsParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof searchCoins>>, TError, TData>
-    > &
-      Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof searchCoins>>,
-          TError,
-          Awaited<ReturnType<typeof searchCoins>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useSearchCoins<
-  TData = Awaited<ReturnType<typeof searchCoins>>,
-  TError = ErrorType<unknown>,
->(
-  params: SearchCoinsParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof searchCoins>>, TError, TData>
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-/**
- * @summary Search coins
- */
-
-export function useSearchCoins<
-  TData = Awaited<ReturnType<typeof searchCoins>>,
-  TError = ErrorType<unknown>,
->(
-  params: SearchCoinsParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof searchCoins>>, TError, TData>
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-} {
-  const queryOptions = getSearchCoinsQueryOptions(params, options)
-
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: DataTag<QueryKey, TData, TError>
-  }
-
-  query.queryKey = queryOptions.queryKey
-
-  return query
 }
 
 /**
@@ -278,149 +65,11 @@ export const getCoinMarket = (
   id: string,
   params?: GetCoinMarketParams,
   options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal,
 ) => {
   return customInstance<GetCoinMarket200>(
-    { url: `/coins/${id}/market`, method: 'GET', params, signal },
+    { url: `/coins/${id}/market`, method: 'GET', params },
     options,
   )
-}
-
-export const getGetCoinMarketQueryKey = (
-  id: string,
-  params?: GetCoinMarketParams,
-) => {
-  return [`/coins/${id}/market`, ...(params ? [params] : [])] as const
-}
-
-export const getGetCoinMarketQueryOptions = <
-  TData = Awaited<ReturnType<typeof getCoinMarket>>,
-  TError = ErrorType<unknown>,
->(
-  id: string,
-  params?: GetCoinMarketParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getCoinMarket>>, TError, TData>
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {}
-
-  const queryKey =
-    queryOptions?.queryKey ?? getGetCoinMarketQueryKey(id, params)
-
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getCoinMarket>>> = ({
-    signal,
-  }) => getCoinMarket(id, params, requestOptions, signal)
-
-  return {
-    queryKey,
-    queryFn,
-    enabled: !!id,
-    ...queryOptions,
-  } as UseQueryOptions<
-    Awaited<ReturnType<typeof getCoinMarket>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetCoinMarketQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getCoinMarket>>
->
-export type GetCoinMarketQueryError = ErrorType<unknown>
-
-export function useGetCoinMarket<
-  TData = Awaited<ReturnType<typeof getCoinMarket>>,
-  TError = ErrorType<unknown>,
->(
-  id: string,
-  params: undefined | GetCoinMarketParams,
-  options: {
-    query: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getCoinMarket>>, TError, TData>
-    > &
-      Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getCoinMarket>>,
-          TError,
-          Awaited<ReturnType<typeof getCoinMarket>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useGetCoinMarket<
-  TData = Awaited<ReturnType<typeof getCoinMarket>>,
-  TError = ErrorType<unknown>,
->(
-  id: string,
-  params?: GetCoinMarketParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getCoinMarket>>, TError, TData>
-    > &
-      Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getCoinMarket>>,
-          TError,
-          Awaited<ReturnType<typeof getCoinMarket>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useGetCoinMarket<
-  TData = Awaited<ReturnType<typeof getCoinMarket>>,
-  TError = ErrorType<unknown>,
->(
-  id: string,
-  params?: GetCoinMarketParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getCoinMarket>>, TError, TData>
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-/**
- * @summary Get coin market
- */
-
-export function useGetCoinMarket<
-  TData = Awaited<ReturnType<typeof getCoinMarket>>,
-  TError = ErrorType<unknown>,
->(
-  id: string,
-  params?: GetCoinMarketParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getCoinMarket>>, TError, TData>
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-} {
-  const queryOptions = getGetCoinMarketQueryOptions(id, params, options)
-
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: DataTag<QueryKey, TData, TError>
-  }
-
-  query.queryKey = queryOptions.queryKey
-
-  return query
 }
 
 /**
@@ -430,7 +79,6 @@ export function useGetCoinMarket<
 export const createUser = (
   createUserBody: BodyType<CreateUserBody>,
   options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal,
 ) => {
   return customInstance<CreateUser201>(
     {
@@ -438,79 +86,9 @@ export const createUser = (
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       data: createUserBody,
-      signal,
     },
     options,
   )
-}
-
-export const getCreateUserMutationOptions = <
-  TError = ErrorType<unknown>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof createUser>>,
-    TError,
-    { data: BodyType<CreateUserBody> },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof createUser>>,
-  TError,
-  { data: BodyType<CreateUserBody> },
-  TContext
-> => {
-  const mutationKey = ['createUser']
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      'mutationKey' in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined }
-
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof createUser>>,
-    { data: BodyType<CreateUserBody> }
-  > = props => {
-    const { data } = props ?? {}
-
-    return createUser(data, requestOptions)
-  }
-
-  return { mutationFn, ...mutationOptions }
-}
-
-export type CreateUserMutationResult = NonNullable<
-  Awaited<ReturnType<typeof createUser>>
->
-export type CreateUserMutationBody = BodyType<CreateUserBody>
-export type CreateUserMutationError = ErrorType<unknown>
-
-/**
- * @summary Create user
- */
-export const useCreateUser = <
-  TError = ErrorType<unknown>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof createUser>>,
-    TError,
-    { data: BodyType<CreateUserBody> },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationResult<
-  Awaited<ReturnType<typeof createUser>>,
-  TError,
-  { data: BodyType<CreateUserBody> },
-  TContext
-> => {
-  const mutationOptions = getCreateUserMutationOptions(options)
-
-  return useMutation(mutationOptions)
 }
 
 /**
@@ -532,75 +110,6 @@ export const updateUser = (
   )
 }
 
-export const getUpdateUserMutationOptions = <
-  TError = ErrorType<unknown>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof updateUser>>,
-    TError,
-    { data: BodyType<UpdateUserBody> },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof updateUser>>,
-  TError,
-  { data: BodyType<UpdateUserBody> },
-  TContext
-> => {
-  const mutationKey = ['updateUser']
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      'mutationKey' in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined }
-
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof updateUser>>,
-    { data: BodyType<UpdateUserBody> }
-  > = props => {
-    const { data } = props ?? {}
-
-    return updateUser(data, requestOptions)
-  }
-
-  return { mutationFn, ...mutationOptions }
-}
-
-export type UpdateUserMutationResult = NonNullable<
-  Awaited<ReturnType<typeof updateUser>>
->
-export type UpdateUserMutationBody = BodyType<UpdateUserBody>
-export type UpdateUserMutationError = ErrorType<unknown>
-
-/**
- * @summary Update user
- */
-export const useUpdateUser = <
-  TError = ErrorType<unknown>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof updateUser>>,
-    TError,
-    { data: BodyType<UpdateUserBody> },
-    TContext
-  >
-  request?: SecondParameter<typeof customInstance>
-}): UseMutationResult<
-  Awaited<ReturnType<typeof updateUser>>,
-  TError,
-  { data: BodyType<UpdateUserBody> },
-  TContext
-> => {
-  const mutationOptions = getUpdateUserMutationOptions(options)
-
-  return useMutation(mutationOptions)
-}
-
 /**
  * List users
  * @summary List users
@@ -608,133 +117,28 @@ export const useUpdateUser = <
 export const listUsers = (
   params?: ListUsersParams,
   options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal,
 ) => {
   return customInstance<ListUsers200>(
-    { url: `/users`, method: 'GET', params, signal },
+    { url: `/users`, method: 'GET', params },
     options,
   )
 }
 
-export const getListUsersQueryKey = (params?: ListUsersParams) => {
-  return [`/users`, ...(params ? [params] : [])] as const
-}
+type AwaitedInput<T> = PromiseLike<T> | T
 
-export const getListUsersQueryOptions = <
-  TData = Awaited<ReturnType<typeof listUsers>>,
-  TError = ErrorType<unknown>,
->(
-  params?: ListUsersParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof listUsers>>, TError, TData>
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {}
+type Awaited<O> = O extends AwaitedInput<infer T> ? T : never
 
-  const queryKey = queryOptions?.queryKey ?? getListUsersQueryKey(params)
-
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof listUsers>>> = ({
-    signal,
-  }) => listUsers(params, requestOptions, signal)
-
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof listUsers>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ListUsersQueryResult = NonNullable<
-  Awaited<ReturnType<typeof listUsers>>
+export type GetUserResult = NonNullable<Awaited<ReturnType<typeof getUser>>>
+export type SearchCoinsResult = NonNullable<
+  Awaited<ReturnType<typeof searchCoins>>
 >
-export type ListUsersQueryError = ErrorType<unknown>
-
-export function useListUsers<
-  TData = Awaited<ReturnType<typeof listUsers>>,
-  TError = ErrorType<unknown>,
->(
-  params: undefined | ListUsersParams,
-  options: {
-    query: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof listUsers>>, TError, TData>
-    > &
-      Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof listUsers>>,
-          TError,
-          Awaited<ReturnType<typeof listUsers>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useListUsers<
-  TData = Awaited<ReturnType<typeof listUsers>>,
-  TError = ErrorType<unknown>,
->(
-  params?: ListUsersParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof listUsers>>, TError, TData>
-    > &
-      Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof listUsers>>,
-          TError,
-          Awaited<ReturnType<typeof listUsers>>
-        >,
-        'initialData'
-      >
-    request?: SecondParameter<typeof customInstance>
-  },
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useListUsers<
-  TData = Awaited<ReturnType<typeof listUsers>>,
-  TError = ErrorType<unknown>,
->(
-  params?: ListUsersParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof listUsers>>, TError, TData>
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-/**
- * @summary List users
- */
-
-export function useListUsers<
-  TData = Awaited<ReturnType<typeof listUsers>>,
-  TError = ErrorType<unknown>,
->(
-  params?: ListUsersParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof listUsers>>, TError, TData>
-    >
-    request?: SecondParameter<typeof customInstance>
-  },
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-} {
-  const queryOptions = getListUsersQueryOptions(params, options)
-
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: DataTag<QueryKey, TData, TError>
-  }
-
-  query.queryKey = queryOptions.queryKey
-
-  return query
-}
+export type GetCoinMarketResult = NonNullable<
+  Awaited<ReturnType<typeof getCoinMarket>>
+>
+export type CreateUserResult = NonNullable<
+  Awaited<ReturnType<typeof createUser>>
+>
+export type UpdateUserResult = NonNullable<
+  Awaited<ReturnType<typeof updateUser>>
+>
+export type ListUsersResult = NonNullable<Awaited<ReturnType<typeof listUsers>>>

@@ -1,11 +1,17 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFsZXh0YXZlbGxhQGdtYWlsLmNvbSIsIm5hbWUiOiJBbGV4IFRhdmVsbGEiLCJyb2xlIjoiYWRtaW4iLCJzdWIiOjgyLCJpYXQiOjE3NDAwODcxMjcsImV4cCI6MTc0MDA5MDcyN30.16Z5-5174WrC9Zkpj2fjFACDxWMZ4QOt-Aw1lYIRoQg
+
 ### Search coins
 GET http://localhost:3333/coins/search?query=bitcoin
+Authorization: Bearer {{token}}
 
 ### Get coin market (ethereum)
 GET http://localhost:3333/coins/ethereum/market?currency=usd
+Authorization: Bearer {{token}}
 
 ### Get coin market (bitcoin)
 GET http://localhost:3333/coins/bitcoin/market?currency=usd
+Authorization: Bearer {{token}}
 
 ### Get coin market (not found)
 GET http://localhost:3333/coins/####/market
+Authorization: Bearer {{token}}

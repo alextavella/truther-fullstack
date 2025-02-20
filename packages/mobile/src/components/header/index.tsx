@@ -1,12 +1,7 @@
+import { Text } from '@/components/text'
 import { colors } from '@/styles/colors'
 import React from 'react'
-import {
-  Dimensions,
-  Text,
-  View,
-  type TextProps,
-  type ViewProps,
-} from 'react-native'
+import { Dimensions, View, type TextProps, type ViewProps } from 'react-native'
 import Svg, { Path } from 'react-native-svg'
 import { s } from './styles'
 

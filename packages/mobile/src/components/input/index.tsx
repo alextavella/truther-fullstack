@@ -1,7 +1,7 @@
+import { Text } from '@/components/text'
 import { colors } from '@/styles/colors'
 import React, { useEffect } from 'react'
 import {
-  Text,
   TextInput,
   View,
   type NativeSyntheticEvent,
