@@ -28,6 +28,8 @@ export function Search({ style, ...rest }: SearchProps) {
         value={searchText}
         onChangeText={setSearchText}
         onEndEditing={handleSearch}
+        autoComplete="off"
+        autoCorrect={false}
         {...rest}
       />
     </View>

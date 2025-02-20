@@ -7,7 +7,7 @@ import { useSession } from '@/providers/SessionProvider'
 import { NumberUtils } from '@/services/utils/number'
 import { colors } from '@/styles/colors'
 import React from 'react'
-import { FlatList, View } from 'react-native'
+import { FlatList, RefreshControl, View } from 'react-native'
 
 export default function Coins() {
   const { user } = useSession()
@@ -26,6 +26,9 @@ export default function Coins() {
           style={{ width: '100%' }}
           data={favoriteCoins}
           keyExtractor={item => item.id}
+          refreshControl={
+            <RefreshControl refreshing={false} onRefresh={() => {}} />
+          }
           renderItem={({ item, index }) => (
             <ListCoin.Root
               onPress={() => goToDetailsCoins(item.id)}
