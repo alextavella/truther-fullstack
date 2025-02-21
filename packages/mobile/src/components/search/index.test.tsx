@@ -10,8 +10,8 @@ describe('<Search />', () => {
   })
 
   it('should redirect correctly when searching', async () => {
-    const { getByTestId } = render(<Search value="bitcoin" />)
-    const element = getByTestId('input')
+    const { getByTestId } = render(<Search />)
+    const element = getByTestId('search-input')
     const user = userEvent.setup()
     await user.press(element)
     await user.type(element, 'bitcoin', { submitEditing: true })
