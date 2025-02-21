@@ -6,7 +6,7 @@ export const authSchema = z.object({
   uid: z.number(),
   name: z.string(),
   email: z.string(),
-  role: z.enum(userRoles).optional().default('customer'),
+  role: z.enum(userRoles).nullable().optional().default('customer'),
 })
 
 export type Auth = z.infer<typeof authSchema>
