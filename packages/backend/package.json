@@ -9,7 +9,9 @@
     "start": "node dist/http/server.js",
     "seed": "tsx --env-file=.env ./src/infra/db/seed.ts",
     "test": "vitest run --coverage",
-    "test:debug": "vitest run --no-coverage"
+    "test:debug": "vitest run --no-coverage",
+    "lint": "eslint ./src/**/*.ts",
+    "lint:fix": "pnpm lint --fix"
   },
   "dependencies": {
     "@fastify/cors": "^10.0.2",
@@ -20,6 +22,7 @@
     "axios": "^1.7.9",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.37.0",
+    "eslint": "^9.20.1",
     "fastify": "^5.2.1",
     "fastify-type-provider-zod": "^4.0.2",
     "http-errors": "^2.0.0",
@@ -29,11 +32,14 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@eslint/js": "^9.20.0",
     "@faker-js/faker": "^9.5.0",
     "@types/http-errors": "^2.0.4",
     "@types/jsonwebtoken": "^9.0.8",
     "@types/node": "^22.13.2",
+    "@vitest/coverage-v8": "^3.0.6",
     "drizzle-kit": "^0.29.1",
+    "vitest": "^3.0.6",
     "tsc-alias": "^1.8.10",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3"
