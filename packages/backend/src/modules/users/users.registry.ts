@@ -5,6 +5,6 @@ import { UpdateUserUseCase } from './usecases/update-user.usecase'
 
 export function registerProviders() {
   registry.registerModule(CreateUserUseCase.name, CreateUserUseCase.build())
-  registry.registerModule(UpdateUserUseCase.name, UpdateUserUseCase.build())
   registry.registerModule(ListUserUseCase.name, ListUserUseCase.build())
+  registry.registerModule(UpdateUserUseCase.name, UpdateUserUseCase.build())
 }

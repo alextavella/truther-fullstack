@@ -17,11 +17,10 @@ export const usersRouter: FastifyPluginAsyncZod = async app => {
       .getModule(CreateUserUseCase.name)
       .execute(request.body)
   })
-  app.put('/:id', updateUserSchema, async request => {
-    const { id } = request.params
+  app.put('/', updateUserSchema, async request => {
     return await registry
       .getModule(UpdateUserUseCase.name)
-      .execute({ id, ...request.body })
+      .execute({ id: request.user.sub, ...request.body })
   })
   app.get('/', listUserSchema, async request => {
     return await registry

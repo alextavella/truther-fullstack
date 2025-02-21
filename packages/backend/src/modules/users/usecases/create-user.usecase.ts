@@ -1,14 +1,15 @@
 import { registry } from '@/config/registry'
-import { UserEntity, type NewUser, type User } from '@/domain/entity/user'
+import type { Auth } from '@/domain/entity/auth'
+import { UserEntity, type NewUser } from '@/domain/entity/user'
 import type { UseCase } from '@/infra/interfaces/usecase'
 import {
   UserRepository,
   type IUserRepository,
 } from '@/infra/repositories/user.repository'
-import { UnprocessableEntity } from 'http-errors'
+import { InternalServerError, UnprocessableEntity } from 'http-errors'
 
 type Input = NewUser
-type Output = User
+type Output = Auth
 
 export type ICreateUserUseCase = UseCase<Input, Output>
 
@@ -23,7 +24,19 @@ export class CreateUserUseCase implements ICreateUserUseCase {
       throw new UnprocessableEntity('User already exists')
     }
 
-    return await this.usersRepository.create(user)
+    const createdUser = await this.usersRepository
+      .create(user)
+      .catch(() => null)
+    if (!createdUser) {
+      throw new InternalServerError('Error creating user')
+    }
+
+    const authUser = UserEntity.authUser(createdUser, password)
+    if (!authUser) {
+      throw new InternalServerError('Error creating user')
+    }
+
+    return authUser.auth
   }
 
   static build() {

@@ -1,3 +1,5 @@
+import { authSchema } from '@/domain/entity/auth'
+import { authMiddleware } from '@/http/middleware'
 import { userEntitySchema, userRoles } from '@/infra/db/schema'
 import {
   paginationQuerySchema,
@@ -7,7 +9,7 @@ import { z } from 'zod'
 
 // Create user schemas
 const createBodySchema = userEntitySchema.omit({ id: true })
-const createResultSchema = userEntitySchema.omit({ id: true })
+const createResultSchema = authSchema
 export const createUserSchema = {
   schema: {
     tags: ['Users'],
@@ -22,16 +24,15 @@ export const createUserSchema = {
 }
 
 // Update user schemas
-const updateParamsSchema = z.object({ id: z.string() })
 const updateBodySchema = userEntitySchema.omit({ id: true })
 const updateResultSchema = userEntitySchema.omit({ id: true })
 export const updateUserSchema = {
+  onRequest: authMiddleware,
   schema: {
     tags: ['Users'],
     description: 'Update user',
     summary: 'Update user',
     operationId: 'updateUser',
-    params: updateParamsSchema,
     body: updateBodySchema,
     response: {
       200: updateResultSchema,
@@ -47,12 +48,13 @@ const listQuerySchema = paginationQuerySchema.merge(
     role: z.enum(userRoles).optional(),
   }),
 )
-const listUsersSchema = userEntitySchema.omit({ id: true, password: true })
+const listUsersSchema = userEntitySchema.omit({ password: true })
 const listResultSchema = z.object({
   items: listUsersSchema.array(),
   pagination: paginationResultSchema,
 })
 export const listUserSchema = {
+  onRequest: authMiddleware,
   schema: {
     tags: ['Users'],
     description: 'List users',

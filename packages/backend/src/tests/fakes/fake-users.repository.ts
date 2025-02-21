@@ -1,4 +1,10 @@
-import type { EditUser, NewUser, User, UserKeys } from '@/domain/entity/user'
+import {
+  UserEntity,
+  type EditUser,
+  type NewUser,
+  type User,
+  type UserKeys,
+} from '@/domain/entity/user'
 import type {
   Pagination,
   PaginationOptions,
@@ -11,7 +17,11 @@ export class FakeUserRepository implements IUserRepository {
   async create(data: NewUser): Promise<User> {
     const ids = Array.from(this._data.keys())
     const userId: number = ids.length ? ids?.[ids.length - 1] + 1 : 1
-    const user: User = { ...data, id: userId, role: data?.role ?? 'customer' }
+    const user: User = {
+      ...UserEntity.newUser(data),
+      id: userId,
+      role: data?.role ?? 'customer',
+    }
     this._data.set(userId, user)
     return user
   }
@@ -19,7 +29,7 @@ export class FakeUserRepository implements IUserRepository {
   async update(id: number, data: EditUser): Promise<User> {
     const user = this._data.get(id)
     if (!user) throw new Error('User not found')
-    const update = { ...data, id }
+    const update = UserEntity.editUser(id, data)
     this._data.set(id, update)
     return update
   }
