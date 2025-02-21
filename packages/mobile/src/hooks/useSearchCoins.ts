@@ -26,7 +26,7 @@ export function useSearchCoins(query: string) {
         setState(prev => ({ ...prev, isLoading: false, isError: true }))
         handleError(err)
       })
-  }, [query])
+  }, [handleError, query])
 
   return state
 }
