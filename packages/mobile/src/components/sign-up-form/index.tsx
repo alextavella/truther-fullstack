@@ -77,7 +77,7 @@ export function SignUpForm({ onSuccess, style, ...rest }: SignUpFormProps) {
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <Input
-            autoCorrect={true}
+            autoCorrect={false}
             autoCapitalize="none"
             keyboardType="email-address"
             placeholder="E-mail"

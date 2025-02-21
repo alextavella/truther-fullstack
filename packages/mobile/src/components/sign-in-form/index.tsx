@@ -28,8 +28,8 @@ export function SignInForm({ onSuccess, style, ...rest }: SignInFormProps) {
   } = useForm<Inputs>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
-      email: 'alextavella@gmail.com',
-      password: '12345678',
+      email: '',
+      password: '',
     },
   })
 
@@ -51,7 +51,7 @@ export function SignInForm({ onSuccess, style, ...rest }: SignInFormProps) {
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <Input
-            autoCorrect={true}
+            autoCorrect={false}
             autoCapitalize="none"
             keyboardType="email-address"
             placeholder="E-mail"
