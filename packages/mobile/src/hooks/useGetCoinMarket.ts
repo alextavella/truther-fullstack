@@ -26,7 +26,7 @@ export function useGetCoinMarket(id: string) {
         setState(prev => ({ ...prev, isLoading: false, isError: true }))
         handleError(err)
       })
-  }, [id])
+  }, [handleError, id])
 
   return state
 }
