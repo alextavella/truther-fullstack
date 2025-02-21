@@ -12,5 +12,6 @@ export type GetUser200 = {
   uid: number
   name: string
   email: string
+  /** @nullable */
   role?: GetUser200Role
 }
