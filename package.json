@@ -10,7 +10,8 @@
     "build:backend": "pnpm --filter backend build",
     "start:backend": "pnpm --filter backend start",
     "test": "pnpm run /^test:/",
-    "test:backend": "pnpm --filter backend test:cov",
+    "test:backend": "pnpm --filter backend test",
+    "test:mobile": "pnpm --filter mobile test",
     "lint": "eslint ./packages/**/src/**/*.ts",
     "lint:fix": "pnpm lint --fix",
     "format": "prettier --ignore-path .gitignore --write \"./packages/**/src/**/*.+(js|ts|json)\""
