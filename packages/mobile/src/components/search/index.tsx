@@ -10,7 +10,7 @@ import { Input } from '../input'
 
 type SearchProps = ViewProps
 
-export function Search({ style, ...rest }: SearchProps) {
+export function Search({ ...rest }: SearchProps) {
   const { goToSearchCoins } = useRedirect()
   const [searchText, setSearchText] = React.useState('')
 
@@ -22,8 +22,9 @@ export function Search({ style, ...rest }: SearchProps) {
   }
 
   return (
-    <View style={style} {...rest}>
+    <View {...rest}>
       <Input
+        testID="search-input"
         autoComplete="off"
         autoCorrect={false}
         autoFocus={false}

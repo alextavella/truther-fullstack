@@ -1,6 +1,6 @@
 import { Text } from '@/components/text'
 import { colors } from '@/styles/colors'
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
   TextInput,
   View,
@@ -54,7 +54,7 @@ export function Input({
       : withTiming(0, { duration: 200 }),
   }))
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (error) {
       // Animação de entrada do erro (fade-in + slide-up)
       errorOpacity.value = withTiming(1, { duration: 200 })
@@ -87,12 +87,13 @@ export function Input({
 
         <View style={s.content}>
           {/* Label animado */}
-          <Animated.Text style={[s.label, labelStyle]}>
+          <Animated.Text testID="label" style={[s.label, labelStyle]}>
             {placeholder}
           </Animated.Text>
 
           {/* Input */}
           <TextInput
+            testID="input"
             style={[
               s.input,
               style,
@@ -109,7 +110,9 @@ export function Input({
 
       {/* Error */}
       <Animated.View style={[s.footer, errorStyle]}>
-        <Text style={s.error}>{helperText}</Text>
+        <Text testID="error" style={s.error}>
+          {helperText}
+        </Text>
       </Animated.View>
     </View>
   )

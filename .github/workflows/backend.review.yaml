@@ -79,10 +79,10 @@ jobs:
         run: pnpm run --filter backend migrate
 
       - name: Lint
-        run: pnpm lint
+        run: pnpm lint:backend
 
       - name: Tests
-        run: pnpm test
+        run: pnpm test:backend
 
       - name: Build
-        run: pnpm build
+        run: pnpm build:backend

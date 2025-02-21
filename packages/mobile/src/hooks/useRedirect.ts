@@ -21,7 +21,8 @@ export function useRedirect() {
       router.navigate(`/coins/${slug}/details`)
     },
     goToBack: () => {
-      router.back()
+      if (router.canGoBack()) router.back()
+      else router.dismissAll()
     },
   }
 }

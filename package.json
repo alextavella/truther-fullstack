@@ -10,21 +10,19 @@
     "build:backend": "pnpm --filter backend build",
     "start:backend": "pnpm --filter backend start",
     "test": "pnpm run /^test:/",
-    "test:backend": "pnpm --filter backend test:cov",
-    "lint": "eslint ./packages/**/src/**/*.ts",
-    "lint:fix": "pnpm lint --fix",
+    "test:backend": "pnpm --filter backend test",
+    "test:mobile": "pnpm --filter mobile test",
+    "lint": "pnpm run /^lint:/",
+    "lint:backend": "pnpm --filter backend lint",
+    "lint:mobile": "pnpm --filter mobile lint",
     "format": "prettier --ignore-path .gitignore --write \"./packages/**/src/**/*.+(js|ts|json)\""
   },
   "devDependencies": {
-    "@eslint/js": "^9.20.0",
     "@faker-js/faker": "^9.5.0",
-    "@vitest/coverage-v8": "^3.0.6",
-    "eslint": "^9.20.1",
     "lint-staged": "^15.4.3",
     "prettier": "^3.5.1",
     "typescript": "^5.7.3",
-    "typescript-eslint": "^8.24.1",
-    "vitest": "^3.0.6"
+    "typescript-eslint": "^8.24.1"
   },
   "prettier": {
     "semi": false,
