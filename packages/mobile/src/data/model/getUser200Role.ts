@@ -6,8 +6,12 @@
  * OpenAPI spec version: 1.0.0
  */
 
+/**
+ * @nullable
+ */
 export type GetUser200Role =
-  (typeof GetUser200Role)[keyof typeof GetUser200Role]
+  | (typeof GetUser200Role)[keyof typeof GetUser200Role]
+  | null
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const GetUser200Role = {
