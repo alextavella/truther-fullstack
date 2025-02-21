@@ -1,14 +1,12 @@
 import { useRedirect } from '@/hooks/useRedirect'
 import React from 'react'
 import {
-  View,
   type NativeSyntheticEvent,
   type TextInputEndEditingEventData,
-  type ViewProps,
 } from 'react-native'
-import { Input } from '../input'
+import { Input, type InputProps } from '../input'
 
-type SearchProps = ViewProps
+type SearchProps = InputProps
 
 export function Search({ style, ...rest }: SearchProps) {
   const { goToSearchCoins } = useRedirect()
@@ -22,17 +20,17 @@ export function Search({ style, ...rest }: SearchProps) {
   }
 
   return (
-    <View style={style} {...rest}>
-      <Input
-        autoComplete="off"
-        autoCorrect={false}
-        autoFocus={false}
-        icon="search"
-        placeholder="Search"
-        value={searchText}
-        onChangeText={setSearchText}
-        onSubmitEditing={handleSearch}
-      />
-    </View>
+    <Input
+      style={style}
+      autoComplete="off"
+      autoCorrect={false}
+      autoFocus={false}
+      icon="search"
+      placeholder="Search"
+      value={searchText}
+      onChangeText={setSearchText}
+      onSubmitEditing={handleSearch}
+      {...rest}
+    />
   )
 }
