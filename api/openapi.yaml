@@ -4,6 +4,11 @@ info:
   description: Truther API Documentation
   version: 1.0.0
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas: {}
 paths:
   /auth:
@@ -70,6 +75,8 @@ paths:
           in: query
           name: query
           required: true
+      security:
+        - bearerAuth: []
       responses:
         "200":
           description: Default Response
@@ -123,6 +130,8 @@ paths:
           in: path
           name: id
           required: true
+      security:
+        - bearerAuth: []
       responses:
         "200":
           description: Default Response
@@ -255,6 +264,8 @@ paths:
                 - password
               additionalProperties: false
         required: true
+      security:
+        - bearerAuth: []
       responses:
         "200":
           description: Default Response
@@ -320,6 +331,8 @@ paths:
           in: query
           name: role
           required: false
+      security:
+        - bearerAuth: []
       responses:
         "200":
           description: Default Response
