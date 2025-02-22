@@ -22,6 +22,15 @@ export const setupOpenApi = async (app: FastifyInstance) => {
           description: 'Development',
         },
       ],
+      components: {
+        securitySchemes: {
+          bearerAuth: {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT',
+          },
+        },
+      },
     },
     transform: jsonSchemaTransform,
   })

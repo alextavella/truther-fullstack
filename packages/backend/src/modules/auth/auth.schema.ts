@@ -4,7 +4,7 @@ import { userEntitySchema } from '@/infra/db/schema'
 // Get user schemas (auth)
 const getBodySchema = userEntitySchema.pick({ email: true, password: true })
 const getResultSchema = authSchema
-export const getUserSchema = {
+export const getUserOptions = {
   schema: {
     tags: ['Auth'],
     description: 'Get user',
