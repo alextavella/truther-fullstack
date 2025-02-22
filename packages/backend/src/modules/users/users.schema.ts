@@ -10,7 +10,7 @@ import { z } from 'zod'
 // Create user schemas
 const createBodySchema = userEntitySchema.omit({ id: true })
 const createResultSchema = authSchema
-export const createUserSchema = {
+export const createUserOptions = {
   schema: {
     tags: ['Users'],
     description: 'Create user',
@@ -26,7 +26,7 @@ export const createUserSchema = {
 // Update user schemas
 const updateBodySchema = userEntitySchema.omit({ id: true })
 const updateResultSchema = userEntitySchema.omit({ id: true })
-export const updateUserSchema = {
+export const updateUserOptions = {
   onRequest: authMiddleware,
   schema: {
     tags: ['Users'],
@@ -37,6 +37,7 @@ export const updateUserSchema = {
     response: {
       200: updateResultSchema,
     },
+    security: [{ bearerAuth: [] }],
   },
 }
 
@@ -53,7 +54,7 @@ const listResultSchema = z.object({
   items: listUsersSchema.array(),
   pagination: paginationResultSchema,
 })
-export const listUserSchema = {
+export const listUserOptions = {
   onRequest: authMiddleware,
   schema: {
     tags: ['Users'],
@@ -64,5 +65,6 @@ export const listUserSchema = {
     response: {
       200: listResultSchema,
     },
+    security: [{ bearerAuth: [] }],
   },
 }

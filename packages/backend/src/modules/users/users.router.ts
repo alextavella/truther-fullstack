@@ -5,24 +5,24 @@ import { ListUserUseCase } from './usecases/list-users.usecase'
 import { UpdateUserUseCase } from './usecases/update-user.usecase'
 import { registerProviders } from './users.registry'
 import {
-  createUserSchema,
-  listUserSchema,
-  updateUserSchema,
+  createUserOptions,
+  listUserOptions,
+  updateUserOptions,
 } from './users.schema'
 
 export const usersRouter: FastifyPluginAsyncZod = async app => {
   app.addHook('onReady', registerProviders)
-  app.post('/', createUserSchema, async request => {
+  app.post('/', createUserOptions, async request => {
     return await registry
       .getModule(CreateUserUseCase.name)
       .execute(request.body)
   })
-  app.put('/', updateUserSchema, async request => {
+  app.put('/', updateUserOptions, async request => {
     return await registry
       .getModule(UpdateUserUseCase.name)
       .execute({ id: request.user.sub, ...request.body })
   })
-  app.get('/', listUserSchema, async request => {
+  app.get('/', listUserOptions, async request => {
     return await registry
       .getModule(ListUserUseCase.name)
       .execute(Object.assign({}, request.query))

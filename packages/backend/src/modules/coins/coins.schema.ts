@@ -12,7 +12,7 @@ const searchQuerySchema = z.object({
 const searchResultSchema = z.object({
   items: coinEntitySchema.array(),
 })
-export const listCoinsSchema = {
+export const listCoinsOptions = {
   schema: {
     tags: ['Coins'],
     description: 'Search coins',
@@ -22,6 +22,7 @@ export const listCoinsSchema = {
     response: {
       200: searchResultSchema,
     },
+    security: [{ bearerAuth: [] }],
   },
 }
 
@@ -33,7 +34,7 @@ const getCoinMarketQuerySchema = z.object({
   currency: coinCurrency.optional().default('usd'),
 })
 const getCoinMarketResultSchema = coinMarketEntitySchema
-export const getCoinMarketSchema = {
+export const getCoinMarketOptions = {
   schema: {
     tags: ['Coins'],
     description: 'Get coin market',
@@ -44,5 +45,6 @@ export const getCoinMarketSchema = {
     response: {
       200: getCoinMarketResultSchema,
     },
+    security: [{ bearerAuth: [] }],
   },
 }
