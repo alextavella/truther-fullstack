@@ -64,7 +64,7 @@ export function Input({
       errorOpacity.value = withTiming(0, { duration: 200 })
       errorTranslateY.value = withTiming(5, { duration: 200 })
     }
-  }, [error])
+  }, [error, errorOpacity, errorTranslateY])
 
   const handleFocus = (e: InputFocusEvent) => {
     isFocused.set(true)
